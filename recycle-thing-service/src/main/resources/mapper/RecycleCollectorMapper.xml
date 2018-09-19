@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.zhenfeng.service.mapper.RecycleCollectorMapper">
+
+    <select id="getRecycleCollector" resultType="pers.zhenfeng.service.po.RecycleCollectorPO">
+        select * from recycle_collector where id = #{id}
+    </select>
+
+</mapper>

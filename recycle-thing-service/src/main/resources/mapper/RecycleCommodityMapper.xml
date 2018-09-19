@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.zhenfeng.service.mapper.RecycleCommodityMapper">
+
+    <select id="getRecycleCommodity" resultType="pers.zhenfeng.service.po.RecycleCommodityPO">
+        select * from recycle_commodity where id = #{id}
+    </select>
+
+    <select id="getRecycleCommodityPage" resultType="pers.zhenfeng.service.po.RecycleCommodityPO">
+        select * from recycle_commodity where is_delete = 0 limit #{index}, #{size}
+    </select>
+
+    <select id="getRecycleCommodityPageCount" resultType="java.lang.Integer">
+        select count(1) from recycle_commodity where is_delete = 0
+    </select>
+
+</mapper>
