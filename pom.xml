@@ -23,9 +23,7 @@
         <module>recycle-thing-core</module>
         <module>recycle-thing-service</module>
         <module>recycle-thing-api</module>
-        <module>recycle-thing-serviceCopy</module>
         <module>recycle-thing-zuul</module>
-        <module>recycle-thing-security</module>
     </modules>
 
     <dependencyManagement>
