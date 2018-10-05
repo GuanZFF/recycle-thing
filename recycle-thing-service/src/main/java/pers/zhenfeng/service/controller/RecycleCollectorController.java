@@ -1,7 +1,9 @@
 package pers.zhenfeng.service.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +14,8 @@ import pers.zhenfeng.service.mapper.RecycleCollectorMapper;
 import pers.zhenfeng.service.po.RecycleCollectorPO;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("collector")
@@ -20,8 +24,8 @@ public class RecycleCollectorController {
     @Resource
     private RecycleCollectorMapper recycleCollectorMapper;
 
-    @RequestMapping("getRecycleCollector")
-    public BaseResult<RecycleCollectorBO> getRecycleCollector(@RequestParam("id") Integer id) {
+    @RequestMapping("getRecycleCollector/{id}")
+    public BaseResult<RecycleCollectorBO> getRecycleCollector(@PathVariable("id") Integer id) {
         RecycleCollectorPO recycleCommodityPO = recycleCollectorMapper.getRecycleCollector(id);
         if (ObjectUtils.isEmpty(recycleCommodityPO)) {
             return BaseResultUtil.success();
@@ -32,6 +36,36 @@ public class RecycleCollectorController {
         BeanUtils.copyProperties(recycleCommodityPO, recycleCollectorBO);
 
         return BaseResultUtil.success(recycleCollectorBO);
+    }
+
+    @RequestMapping("getRecycleCollectorByNo")
+    public BaseResult<RecycleCollectorBO> getRecycleCollectorByNo(@RequestParam("collectorNo") String collectorNo) {
+        RecycleCollectorPO recycleCommodityPO = recycleCollectorMapper.getRecycleCollectorByNo(collectorNo);
+        if (ObjectUtils.isEmpty(recycleCommodityPO)) {
+            return BaseResultUtil.success();
+        }
+
+        RecycleCollectorBO recycleCollectorBO = new RecycleCollectorBO();
+
+        BeanUtils.copyProperties(recycleCommodityPO, recycleCollectorBO);
+
+        return BaseResultUtil.success(recycleCollectorBO);
+    }
+
+    @RequestMapping("getAllRecycleCollector")
+    public BaseResult<List<RecycleCollectorBO>> getAllRecycleCollector() {
+        List<RecycleCollectorPO> recycleCollectorPOS = recycleCollectorMapper.getAllRecycleCollector();
+        if (CollectionUtils.isEmpty(recycleCollectorPOS)) {
+            return BaseResultUtil.success();
+        }
+
+        List<RecycleCollectorBO> recycleCollectorBOS = recycleCollectorPOS.stream().map(recycleCollectorPO -> {
+            RecycleCollectorBO recycleCollectorBO = new RecycleCollectorBO();
+            BeanUtils.copyProperties(recycleCollectorPO, recycleCollectorBO);
+            return recycleCollectorBO;
+        }).collect(Collectors.toList());
+
+        return BaseResultUtil.success(recycleCollectorBOS);
     }
 
 }

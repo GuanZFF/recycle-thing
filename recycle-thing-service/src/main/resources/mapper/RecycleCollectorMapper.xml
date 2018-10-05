@@ -6,4 +6,12 @@
         select * from recycle_collector where id = #{id}
     </select>
 
+    <select id="getRecycleCollectorByNo" resultType="pers.zhenfeng.service.po.RecycleCollectorPO">
+        select * from recycle_collector where collector_no = #{collectorNo}
+    </select>
+
+    <select id="getAllRecycleCollector" resultType="pers.zhenfeng.service.po.RecycleCollectorPO">
+        select * from recycle_collector where is_delete = 0
+    </select>
+
 </mapper>

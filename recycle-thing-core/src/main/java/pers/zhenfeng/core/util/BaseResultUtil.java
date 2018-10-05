@@ -6,6 +6,10 @@ import pers.zhenfeng.core.constant.ResultMsg;
 
 public class BaseResultUtil {
 
+    public static Boolean isSuccess(BaseResult baseResult) {
+        return baseResult.getCode() == ResultCode.SUCCESS.getCode();
+    }
+
     public static <T> BaseResult<T> success(T e) {
         BaseResult<T> tTmsBaseResult = new BaseResult<>();
         tTmsBaseResult.setCode(ResultCode.SUCCESS.getCode());
@@ -36,6 +40,5 @@ public class BaseResultUtil {
         tTmsBaseResult.setMsg(resultDesc);
         return tTmsBaseResult;
     }
-
 
 }

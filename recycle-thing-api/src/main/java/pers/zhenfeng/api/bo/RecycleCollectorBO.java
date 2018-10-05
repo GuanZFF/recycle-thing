@@ -5,6 +5,8 @@ public class RecycleCollectorBO {
 
     private String collectorNo;
 
+    private String wechatNo;
+
     private String username;
 
     private String phone;
@@ -33,6 +35,14 @@ public class RecycleCollectorBO {
 
     public void setCollectorNo(String collectorNo) {
         this.collectorNo = collectorNo;
+    }
+
+    public String getWechatNo() {
+        return wechatNo;
+    }
+
+    public void setWechatNo(String wechatNo) {
+        this.wechatNo = wechatNo;
     }
 
     public String getUsername() {

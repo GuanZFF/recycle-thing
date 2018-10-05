@@ -7,7 +7,7 @@ public class RecycleCommodityBO {
 
     private Integer id;
 
-    private Integer collectorId;
+    private String collectorNo;
 
     private Integer villageId;
 
@@ -16,6 +16,8 @@ public class RecycleCommodityBO {
     private String commodityName;
 
     private String commodityPicture;
+
+    private String imgUrl;
 
     private Integer commodityStatus;
 
@@ -39,12 +41,12 @@ public class RecycleCommodityBO {
         this.id = id;
     }
 
-    public Integer getCollectorId() {
-        return collectorId;
+    public String getCollectorNo() {
+        return collectorNo;
     }
 
-    public void setCollectorId(Integer collectorId) {
-        this.collectorId = collectorId;
+    public void setCollectorNo(String collectorNo) {
+        this.collectorNo = collectorNo;
     }
 
     public Integer getVillageId() {
@@ -77,6 +79,14 @@ public class RecycleCommodityBO {
 
     public void setCommodityPicture(String commodityPicture) {
         this.commodityPicture = commodityPicture;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public Integer getCommodityStatus() {

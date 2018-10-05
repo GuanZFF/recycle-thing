@@ -1,17 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.zhenfeng.service.mapper.RecycleCommodityMapper">
+    <insert id="insert" parameterType="pers.zhenfeng.service.po.RecycleCommodityPO" useGeneratedKeys="true" keyProperty="id">
+        insert into recycle_commodity(
+            collector_no,
+            village_id,
+            commodity_no,
+            commodity_name,
+            commodity_picture,
+            img_url,
+            commodity_status,
+            commodity_type,
+            recycle_time,
+            recycle_price,
+            expect_sell_price,
+            actual_sell_price,
+            remark,
+            is_delete,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        )
+        values (
+            #{collectorNo},
+            #{villageId},
+            #{commodityNo},
+            #{commodityName},
+            #{commodityPicture},
+            #{imgUrl},
+            #{commodityStatus},
+            #{commodityType},
+            #{recycleTime},
+            #{recyclePrice},
+            #{expectSellPrice},
+            #{actualSellPrice},
+            #{remark},
+            0,
+            now(),
+            #{createBy},
+            now(),
+            #{createBy}
+        )
+    </insert>
+
+    <update id="updateCommodityToStart">
+        update
+            recycle_commodity
+        set
+            commodity_status = 1,
+            update_time = now()
+        where
+            commodity_no = #{commodityNo}
+        and
+            commodity_status = 0
+        and
+            is_delete = 0
+    </update>
+
+    <update id="updateCommodityToStop">
+        update
+            recycle_commodity
+        set
+            commodity_status = 2,
+            update_time = now()
+        where
+            commodity_no = #{commodityNo}
+        and
+            commodity_status = 1
+        and
+            is_delete = 0
+    </update>
 
     <select id="getRecycleCommodity" resultType="pers.zhenfeng.service.po.RecycleCommodityPO">
         select * from recycle_commodity where id = #{id}
     </select>
 
+    <sql id="QueryCommodityParam">
+        <if test="param.commodityNo != null and param.commodityNo != ''">
+            and commodity_no = #{param.commodityNo}
+        </if>
+        <if test="param.commodityStatus != null">
+            and commodity_status = #{param.commodityStatus}
+        </if>
+    </sql>
+
     <select id="getRecycleCommodityPage" resultType="pers.zhenfeng.service.po.RecycleCommodityPO">
-        select * from recycle_commodity where is_delete = 0 limit #{index}, #{size}
+        select
+            *
+        from
+            recycle_commodity
+        where
+            is_delete = 0
+        <include refid="QueryCommodityParam"/>
+        order by create_time desc
+        limit #{index}, #{size}
     </select>
 
     <select id="getRecycleCommodityPageCount" resultType="java.lang.Integer">
-        select count(1) from recycle_commodity where is_delete = 0
+        select
+            count(1)
+        from
+            recycle_commodity
+        where
+            is_delete = 0
+        <include refid="QueryCommodityParam"/>
+    </select>
+
+    <select id="getRecycleCommodityByNo" resultType="pers.zhenfeng.service.po.RecycleCommodityPO">
+        select * from recycle_commodity where commodity_no = #{commodityNo}
     </select>
 
 </mapper>

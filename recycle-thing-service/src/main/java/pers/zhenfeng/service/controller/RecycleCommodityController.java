@@ -1,18 +1,24 @@
 package pers.zhenfeng.service.controller;
 
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pers.zhenfeng.api.bo.QueryCommodityParam;
 import pers.zhenfeng.api.bo.RecycleCommodityBO;
 import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
+import pers.zhenfeng.core.constant.CommodityStatus;
 import pers.zhenfeng.core.util.BasePageUtil;
 import pers.zhenfeng.core.util.BaseResultUtil;
+import pers.zhenfeng.core.util.NumberUtil;
+import pers.zhenfeng.service.constant.NumberManage;
+import pers.zhenfeng.service.mapper.NumberManageMapper;
 import pers.zhenfeng.service.mapper.RecycleCommodityMapper;
+import pers.zhenfeng.service.po.NumberManagePO;
 import pers.zhenfeng.service.po.RecycleCommodityPO;
 
 import javax.annotation.Resource;
@@ -22,11 +28,16 @@ import java.util.List;
 @RequestMapping("/commodity")
 public class RecycleCommodityController {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(RecycleCommodityController.class);
+
     @Resource
     private RecycleCommodityMapper recycleCommodityMapper;
 
-    @RequestMapping("getRecycleCommodity")
-    public BaseResult<RecycleCommodityBO> getRecycleCommodity(@RequestParam("id") Integer id) {
+    @Resource
+    private NumberManageMapper numberManageMapper;
+
+    @RequestMapping("getRecycleCommodity/{id}")
+    public BaseResult<RecycleCommodityBO> getRecycleCommodityById(@PathVariable("id") Integer id) {
         RecycleCommodityPO recycleCommodityPO = recycleCommodityMapper.getRecycleCommodity(id);
         if (ObjectUtils.isEmpty(recycleCommodityPO)) {
             return BaseResultUtil.success();
@@ -39,21 +50,36 @@ public class RecycleCommodityController {
         return BaseResultUtil.success(recycleCommodityBO);
     }
 
-    @RequestMapping("getRecycleCommodityPage")
-    public BaseResult<BasePage<RecycleCommodityBO>> getRecycleCommodityPage(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        Integer index = (pageNum - 1) * pageSize;
+    @RequestMapping("getRecycleCommodity")
+    public BaseResult<RecycleCommodityBO> getRecycleCommodity(@RequestParam("commodityNo") String commodityNo) {
+        LOGGER.error("getRecycleCommodity");
+        RecycleCommodityPO recycleCommodityPO = recycleCommodityMapper.getRecycleCommodityByNo(commodityNo);
+        if (ObjectUtils.isEmpty(recycleCommodityPO)) {
+            return BaseResultUtil.success();
+        }
 
-        Integer count = recycleCommodityMapper.getRecycleCommodityPageCount();
+        RecycleCommodityBO recycleCommodityBO = new RecycleCommodityBO();
+
+        BeanUtils.copyProperties(recycleCommodityPO, recycleCommodityBO);
+
+        return BaseResultUtil.success(recycleCommodityBO);
+    }
+
+    @RequestMapping(value = "getRecycleCommodityPage", method = RequestMethod.POST)
+    public BaseResult<BasePage<RecycleCommodityBO>> getRecycleCommodityPage(@RequestBody QueryCommodityParam param) {
+        Integer index = (param.getPageNum() - 1) * param.getPageSize();
+
+        Integer count = recycleCommodityMapper.getRecycleCommodityPageCount(param);
         if (count <= 0) {
             return BaseResultUtil.success(BasePageUtil.emptyPage());
         }
 
-        List<RecycleCommodityPO> list = recycleCommodityMapper.getRecycleCommodityPage(index, pageSize);
+        List<RecycleCommodityPO> list = recycleCommodityMapper.getRecycleCommodityPage(index, param.getPageSize(), param);
 
         List<RecycleCommodityBO> recycleCommodityBOS = Lists.newArrayList();
 
         if (CollectionUtils.isEmpty(list)) {
-            return BaseResultUtil.success(BasePageUtil.successPage(pageNum, pageSize, count, recycleCommodityBOS));
+            return BaseResultUtil.success(BasePageUtil.successPage(param.getPageNum(), param.getPageSize(), count, recycleCommodityBOS));
         }
 
         BeanUtils.copyProperties(list, recycleCommodityBOS);
@@ -63,9 +89,58 @@ public class RecycleCommodityController {
             recycleCommodityBOS.add(recycleCommodityBO);
         });
 
-        BasePage<RecycleCommodityBO> basePage = BasePageUtil.successPage(pageNum, pageSize, count, recycleCommodityBOS);
+        BasePage<RecycleCommodityBO> basePage = BasePageUtil.successPage(param.getPageNum(), param.getPageSize(), count, recycleCommodityBOS);
 
         return BaseResultUtil.success(basePage);
+    }
+
+    @RequestMapping(value = "insert", method = RequestMethod.POST)
+    public BaseResult<Integer> insertRecycleCommodity(@RequestBody RecycleCommodityBO recycleCommodityBO) {
+        RecycleCommodityPO recycleCommodityPO = new RecycleCommodityPO();
+        BeanUtils.copyProperties(recycleCommodityBO, recycleCommodityPO);
+
+        // 生成商品编号
+        String commodityNo = NumberUtil.generateCommodityNo(getNumber(NumberManage.COMMODITY.getKey()));
+
+        recycleCommodityPO.setCommodityNo(commodityNo);
+        recycleCommodityPO.setCommodityStatus(CommodityStatus.INIT.getCode());
+
+        Integer id = recycleCommodityMapper.insert(recycleCommodityPO);
+
+        return BaseResultUtil.success(id);
+    }
+
+    @RequestMapping("updateCommodityToStart")
+    public BaseResult<Integer> updateCommodityToStart(@RequestParam("commodityNo") String commodityNo) {
+        Integer updateCol = recycleCommodityMapper.updateCommodityToStart(commodityNo);
+        if (updateCol > 0) {
+            return BaseResultUtil.success(updateCol);
+        }
+        return BaseResultUtil.fail("更新失败");
+    }
+
+    @RequestMapping("updateCommodityToStop")
+    public BaseResult<Integer> updateCommodityToStop(@RequestParam("commodityNo") String commodityNo) {
+        Integer updateCol = recycleCommodityMapper.updateCommodityToStop(commodityNo);
+        if (updateCol > 0) {
+            return BaseResultUtil.success(updateCol);
+        }
+        return BaseResultUtil.fail("更新失败");
+    }
+
+
+    /**
+     * 生成递增随机数
+     *
+     * @param key 主键
+     *
+     * @return 随机数
+     */
+    private Integer getNumber(String key) {
+        NumberManagePO numberManagePO = numberManageMapper.getNumberManage(key);
+        Integer value = numberManagePO.getValue() + (int) (Math.random() * 10);
+        numberManageMapper.updateNumberManage(key, value);
+        return value;
     }
 
 }

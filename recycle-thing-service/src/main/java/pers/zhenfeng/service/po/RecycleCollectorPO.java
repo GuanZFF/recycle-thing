@@ -1,10 +1,12 @@
 package pers.zhenfeng.service.po;
 
-public class RecycleCollectorPO {
+public class RecycleCollectorPO extends BasePO{
 
     private Integer id;
 
     private String collectorNo;
+
+    private String wechatNo;
 
     private String username;
 
@@ -34,6 +36,14 @@ public class RecycleCollectorPO {
 
     public void setCollectorNo(String collectorNo) {
         this.collectorNo = collectorNo;
+    }
+
+    public String getWechatNo() {
+        return wechatNo;
+    }
+
+    public void setWechatNo(String wechatNo) {
+        this.wechatNo = wechatNo;
     }
 
     public String getUsername() {
