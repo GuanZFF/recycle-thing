@@ -20,6 +20,7 @@ import pers.zhenfeng.service.mapper.NumberManageMapper;
 import pers.zhenfeng.service.mapper.RecycleCommodityMapper;
 import pers.zhenfeng.service.po.NumberManagePO;
 import pers.zhenfeng.service.po.RecycleCommodityPO;
+import pers.zhenfeng.service.service.CommonService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -34,7 +35,7 @@ public class RecycleCommodityController {
     private RecycleCommodityMapper recycleCommodityMapper;
 
     @Resource
-    private NumberManageMapper numberManageMapper;
+    private CommonService commonService;
 
     @RequestMapping("getRecycleCommodity/{id}")
     public BaseResult<RecycleCommodityBO> getRecycleCommodityById(@PathVariable("id") Integer id) {
@@ -100,7 +101,7 @@ public class RecycleCommodityController {
         BeanUtils.copyProperties(recycleCommodityBO, recycleCommodityPO);
 
         // 生成商品编号
-        String commodityNo = NumberUtil.generateCommodityNo(getNumber(NumberManage.COMMODITY.getKey()));
+        String commodityNo = NumberUtil.generateCommodityNo(commonService.getNumber(NumberManage.COMMODITY.getKey()));
 
         recycleCommodityPO.setCommodityNo(commodityNo);
         recycleCommodityPO.setCommodityStatus(CommodityStatus.INIT.getCode());
@@ -126,21 +127,6 @@ public class RecycleCommodityController {
             return BaseResultUtil.success(updateCol);
         }
         return BaseResultUtil.fail("更新失败");
-    }
-
-
-    /**
-     * 生成递增随机数
-     *
-     * @param key 主键
-     *
-     * @return 随机数
-     */
-    private Integer getNumber(String key) {
-        NumberManagePO numberManagePO = numberManageMapper.getNumberManage(key);
-        Integer value = numberManagePO.getValue() + (int) (Math.random() * 10);
-        numberManageMapper.updateNumberManage(key, value);
-        return value;
     }
 
 }

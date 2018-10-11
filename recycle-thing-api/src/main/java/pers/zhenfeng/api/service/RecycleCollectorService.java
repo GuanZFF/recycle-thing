@@ -3,6 +3,7 @@ package pers.zhenfeng.api.service;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pers.zhenfeng.api.bo.RecycleCollectorBO;
@@ -27,4 +28,7 @@ public interface RecycleCollectorService {
 
     @RequestMapping("/collector/getAllRecycleCollector")
     BaseResult<List<RecycleCollectorBO>> getAllRecycleCollector();
+
+    @RequestMapping("insertRecycleCollector")
+    BaseResult<Integer> insertRecycleCollector(@RequestBody RecycleCollectorBO recycleCollectorBO);
 }

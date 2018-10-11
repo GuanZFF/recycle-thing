@@ -10,6 +10,10 @@ public class BaseResultUtil {
         return baseResult.getCode() == ResultCode.SUCCESS.getCode();
     }
 
+    public static Boolean isFail(BaseResult baseResult) {
+        return !isSuccess(baseResult);
+    }
+
     public static <T> BaseResult<T> success(T e) {
         BaseResult<T> tTmsBaseResult = new BaseResult<>();
         tTmsBaseResult.setCode(ResultCode.SUCCESS.getCode());
@@ -26,7 +30,7 @@ public class BaseResultUtil {
     }
 
     public static <T> BaseResult<T> fail(String resultDesc) {
-        return fail(ResultCode.SUCCESS.getCode(), resultDesc);
+        return fail(ResultCode.FALLBACK.getCode(), resultDesc);
     }
 
     public static <T> BaseResult<T> fallback() {

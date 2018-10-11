@@ -17,4 +17,6 @@ public interface RecycleCollectorMapper {
 
     List<RecycleCollectorPO> getAllRecycleCollector();
 
+    Integer insertRecycleCollector(RecycleCollectorPO recycleCollectorPO);
+
 }

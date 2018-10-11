@@ -3,14 +3,20 @@ package pers.zhenfeng.service.controller;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pers.zhenfeng.api.bo.CommodityTypeBO;
+import pers.zhenfeng.api.bo.RecycleLogBO;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.util.BaseResultUtil;
+import pers.zhenfeng.service.base.LogUtil;
 import pers.zhenfeng.service.mapper.CommodityTypeMapper;
+import pers.zhenfeng.service.mapper.NumberManageMapper;
 import pers.zhenfeng.service.po.CommodityTypePO;
+import pers.zhenfeng.service.po.NumberManagePO;
+import pers.zhenfeng.service.po.RecycleLogPO;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -45,7 +51,7 @@ public class CommonController {
     }
 
     @RequestMapping("insertCommodityType")
-    public BaseResult<Integer> integerBaseResult(@RequestBody CommodityTypeBO commodityTypeBO) {
+    public BaseResult<Integer> insertCommodityType(@RequestBody CommodityTypeBO commodityTypeBO) {
         CommodityTypePO commodityTypePO = new CommodityTypePO();
         BeanUtils.copyProperties(commodityTypeBO, commodityTypePO);
         Integer insertCommodityType = commodityTypeMapper.insertCommodityType(commodityTypePO);
@@ -53,5 +59,17 @@ public class CommonController {
         return BaseResultUtil.success(insertCommodityType);
     }
 
+    @RequestMapping("insertLog")
+    public BaseResult<Void> insertLog(@RequestBody RecycleLogBO recycleLogBO) {
+        if (ObjectUtils.isEmpty(recycleLogBO)) {
+            return BaseResultUtil.success();
+        }
+
+        RecycleLogPO recycleLogPO = new RecycleLogPO();
+        BeanUtils.copyProperties(recycleLogBO, recycleLogPO);
+        LogUtil.insertLog(recycleLogPO);
+
+        return BaseResultUtil.success();
+    }
 
 }

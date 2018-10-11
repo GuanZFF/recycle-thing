@@ -2,5 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.zhenfeng.service.mapper.RecycleLogMapper">
 
+    <insert id="insert" parameterType="pers.zhenfeng.service.po.RecycleLogPO" useGeneratedKeys="true" keyProperty="id">
+        insert into recycle_log (
+            type,
+            title,
+            message,
+            text,
+            is_delete,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        )
+        values (
+            #{type},
+            #{title},
+            #{message},
+            #{text},
+            0,
+            #{createBy},
+            now(),
+            #{createBy},
+            now()
+        )
+    </insert>
+
+    <insert id="batchInsert" parameterType="pers.zhenfeng.service.po.RecycleLogPO" useGeneratedKeys="true" keyProperty="id">
+        insert into recycle_log (
+            type,
+            title,
+            message,
+            text,
+            is_delete,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.type},
+            #{item.title},
+            #{item.message},
+            #{item.text},
+            0,
+            now(),
+            #{item.createBy},
+            now(),
+            #{item.createBy}
+            )
+        </foreach>
+    </insert>
 
 </mapper>

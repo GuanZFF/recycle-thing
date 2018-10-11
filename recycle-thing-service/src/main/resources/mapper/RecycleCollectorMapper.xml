@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.zhenfeng.service.mapper.RecycleCollectorMapper">
+    <insert id="insertRecycleCollector" parameterType="pers.zhenfeng.service.po.RecycleCollectorPO" useGeneratedKeys="true" keyProperty="id">
+        insert commodity_type (
+            collector_no,
+            wechat_no,
+            username,
+            phone,
+            status,
+            address,
+            avatar,
+            sex,
+            remark,
+            is_delete,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        )
+        values (
+            #{collectorNo},
+            #{wechatNo},
+            #{username},
+            #{phone},
+            #{status},
+            #{address},
+            #{avatar},
+            #{sex},
+            #{remark},
+            0,
+            now(),
+            #{createBy},
+            now(),
+            #{createBy}
+        )
+    </insert>
 
     <select id="getRecycleCollector" resultType="pers.zhenfeng.service.po.RecycleCollectorPO">
         select * from recycle_collector where id = #{id}

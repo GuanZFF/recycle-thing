@@ -1,8 +1,11 @@
 package pers.zhenfeng.web.util;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
+import pers.zhenfeng.api.bo.CommodityTypeBO;
 import pers.zhenfeng.api.bo.RecycleCommodityBO;
 import pers.zhenfeng.core.util.DateUtil;
+import pers.zhenfeng.web.vo.CommodityTypeVO;
 import pers.zhenfeng.web.vo.RecycleCommodityVO;
 
 import java.util.Arrays;
@@ -35,4 +38,11 @@ public class BOVOUtil {
         return recycleCommodityVO;
     }
 
+    public static CommodityTypeVO buildCommodityTypeVO(CommodityTypeBO commodityTypeBO) {
+        CommodityTypeVO commodityTypeVO = new CommodityTypeVO();
+
+        BeanUtils.copyProperties(commodityTypeBO, commodityTypeVO);
+
+        return commodityTypeVO;
+    }
 }
