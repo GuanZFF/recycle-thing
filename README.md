@@ -5,6 +5,3 @@
  - SERVICE提供了链接数据库的相关接口
  - SSO提供B端接口
  - WEB提供C端接口
-
-### 依赖关系图
-![Diagram](./attachments/1539277631269.drawio.html)
