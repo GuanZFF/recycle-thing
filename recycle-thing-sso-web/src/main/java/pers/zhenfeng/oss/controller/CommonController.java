@@ -85,4 +85,9 @@ public class CommonController {
 
         return BaseResultUtil.success(baseResult.getData());
     }
+
+    @RequestMapping("deleteCommodityType")
+    public BaseResult<Integer> deleteCommodityType(@RequestParam("id") Integer id) {
+        return commonService.deleteCommodityType(id);
+    }
 }

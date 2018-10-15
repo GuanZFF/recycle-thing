@@ -22,6 +22,16 @@
         )
     </insert>
 
+    <delete id="deleteCommodityType">
+        update
+            commodity_type
+        set
+            is_delete = 1,
+            update_time = now()
+        where
+            id = #{id}
+    </delete>
+
     <select id="getAllCommodityType" resultType="pers.zhenfeng.service.po.CommodityTypePO">
         select
             *

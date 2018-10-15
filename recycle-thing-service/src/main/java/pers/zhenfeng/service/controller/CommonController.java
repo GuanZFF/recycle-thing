@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pers.zhenfeng.api.bo.CommodityTypeBO;
 import pers.zhenfeng.api.bo.RecycleLogBO;
@@ -57,6 +58,12 @@ public class CommonController {
         Integer insertCommodityType = commodityTypeMapper.insertCommodityType(commodityTypePO);
 
         return BaseResultUtil.success(insertCommodityType);
+    }
+
+    @RequestMapping("deleteCommodityType")
+    public BaseResult<Integer> deleteCommodityType(@RequestParam("id") Integer id) {
+        commodityTypeMapper.deleteCommodityType(id);
+        return BaseResultUtil.success();
     }
 
     @RequestMapping("insertLog")

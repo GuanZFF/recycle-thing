@@ -27,6 +27,11 @@ public class CommonServiceFallback implements CommonService {
     }
 
     @Override
+    public BaseResult<Integer> deleteCommodityType(Integer id) {
+        return BaseResultUtil.fallback();
+    }
+
+    @Override
     public BaseResult<Void> insertLog(RecycleLogBO recycleLogBO) {
         return BaseResultUtil.fallback();
     }

@@ -1,6 +1,7 @@
 package pers.zhenfeng.service.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import pers.zhenfeng.service.po.CommodityTypePO;
 
@@ -17,5 +18,7 @@ public interface CommodityTypeMapper {
     Integer insertCommodityType(CommodityTypePO commodityTypePO);
 
     List<CommodityTypePO> getAllCommodityType();
+
+    Integer deleteCommodityType(@Param("id") Integer id);
 
 }
