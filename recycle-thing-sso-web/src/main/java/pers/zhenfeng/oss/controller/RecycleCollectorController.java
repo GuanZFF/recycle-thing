@@ -2,13 +2,16 @@ package pers.zhenfeng.oss.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pers.zhenfeng.api.bo.RecycleCollectorBO;
 import pers.zhenfeng.api.service.RecycleCollectorService;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.constant.CollectorStatus;
+import pers.zhenfeng.core.constant.ResultMsg;
 import pers.zhenfeng.core.constant.SexStatus;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.oss.vo.RecycleCollectorVO;
@@ -53,6 +56,15 @@ public class RecycleCollectorController {
         recycleCollectorService.insertRecycleCollector(recycleCollectorBO);
 
         return BaseResultUtil.success();
+    }
+
+    @RequestMapping("deleteRecycleCollector")
+    public BaseResult<Integer> deleteRecycleCollector(@RequestParam("collectorNo") String collectorNo) {
+        if (StringUtils.isEmpty(collectorNo)) {
+            return BaseResultUtil.fail(ResultMsg.PARAM_ERROR.getMsg());
+        }
+
+        return recycleCollectorService.deleteRecycleCollector(collectorNo);
     }
 
     private static RecycleCollectorVO buildRecycleCollectorVO(RecycleCollectorBO recycleCollectorBO) {

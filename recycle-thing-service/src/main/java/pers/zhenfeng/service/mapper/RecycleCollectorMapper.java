@@ -19,4 +19,5 @@ public interface RecycleCollectorMapper {
 
     Integer insertRecycleCollector(RecycleCollectorPO recycleCollectorPO);
 
+    Integer deleteRecycleCollector(@Param("collectorNo") String collectorNo);
 }

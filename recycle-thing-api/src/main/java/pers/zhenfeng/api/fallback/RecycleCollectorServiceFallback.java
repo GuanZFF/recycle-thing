@@ -34,4 +34,9 @@ public class RecycleCollectorServiceFallback implements RecycleCollectorService 
     public BaseResult<Integer> insertRecycleCollector(RecycleCollectorBO recycleCollectorBO) {
         return BaseResultUtil.fallback();
     }
+
+    @Override
+    public BaseResult<Integer> deleteRecycleCollector(String collectorNo) {
+        return BaseResultUtil.fallback();
+    }
 }

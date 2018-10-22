@@ -3,10 +3,12 @@ package pers.zhenfeng.service.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import pers.zhenfeng.api.bo.RecycleCollectorBO;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.constant.CommodityStatus;
+import pers.zhenfeng.core.constant.ResultMsg;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.core.util.NumberUtil;
 import pers.zhenfeng.service.constant.NumberManage;
@@ -86,5 +88,16 @@ public class RecycleCollectorController {
         Integer id = recycleCollectorMapper.insertRecycleCollector(recycleCollectorPO);
 
         return BaseResultUtil.success(id);
+    }
+
+    @RequestMapping("deleteRecycleCollector")
+    public BaseResult<Integer> deleteRecycleCollector(@RequestParam("collectorNo") String collectorNo) {
+        if (StringUtils.isEmpty(collectorNo)) {
+            return BaseResultUtil.fail(ResultMsg.PARAM_ERROR.getMsg());
+        }
+
+        Integer result = recycleCollectorMapper.deleteRecycleCollector(collectorNo);
+
+        return BaseResultUtil.success(result);
     }
 }

@@ -29,6 +29,9 @@ public interface RecycleCollectorService {
     @RequestMapping("/collector/getAllRecycleCollector")
     BaseResult<List<RecycleCollectorBO>> getAllRecycleCollector();
 
-    @RequestMapping("insertRecycleCollector")
+    @RequestMapping("/collector/insertRecycleCollector")
     BaseResult<Integer> insertRecycleCollector(@RequestBody RecycleCollectorBO recycleCollectorBO);
+
+    @RequestMapping("/collector/deleteRecycleCollector")
+    BaseResult<Integer> deleteRecycleCollector(@RequestParam("collectorNo") String collectorNo);
 }

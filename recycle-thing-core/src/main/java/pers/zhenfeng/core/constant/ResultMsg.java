@@ -1,7 +1,7 @@
 package pers.zhenfeng.core.constant;
 
 public enum ResultMsg {
-    SUCCESS("success"), FAIL("fail"), FALLBACK("熔断异常");
+    SUCCESS("success"), FAIL("fail"), FALLBACK("熔断异常"), PARAM_ERROR("参数错误");
 
     private String msg;
 
