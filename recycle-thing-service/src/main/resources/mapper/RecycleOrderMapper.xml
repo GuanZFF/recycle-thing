@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.zhenfeng.service.mapper.RecycleOrderMapper">
+
+    <insert id="insert" parameterType="pers.zhenfeng.service.po.RecycleOrderPO" useGeneratedKeys="true" keyProperty="id">
+        insert into recycle_order (
+            order_no,
+            uid,
+            city,
+            address,
+            phone,
+            start_time,
+            end_time,
+            order_img,
+            status,
+            remark,
+            is_delete,
+            create_time,
+            create_by,
+            update_time,
+            update_by)
+        values (
+            #{orderNo},
+            #{uid},
+            #{city},
+            #{address},
+            #{phone},
+            #{startTime},
+            #{endTime},
+            #{orderImg},
+            1,
+            #{remark},
+            0,
+            now(),
+            #{createBy},
+            now(),
+            #{updateBy})
+    </insert>
+
+    <select id="getRecycleOrderList" resultType="pers.zhenfeng.service.po.RecycleOrderPO">
+        select
+            *
+        from
+            recycle_order
+        where
+            is_delete = 0
+        and
+            uid = #{uid}
+    </select>
+
+</mapper>

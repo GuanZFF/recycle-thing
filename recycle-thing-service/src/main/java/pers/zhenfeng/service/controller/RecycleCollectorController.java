@@ -80,7 +80,7 @@ public class RecycleCollectorController {
         BeanUtils.copyProperties(recycleCollectorBO, recycleCollectorPO);
 
         // 生成商品编号
-        String commodityNo = NumberUtil.generateCommodityNo(commonService.getNumber(NumberManage.COLLECTOR.getKey()));
+        String commodityNo = NumberUtil.generateCollectorNo(commonService.getNumber(NumberManage.COLLECTOR.getKey()));
 
         recycleCollectorPO.setCollectorNo(commodityNo);
         recycleCollectorPO.setStatus(CommodityStatus.INIT.getCode());
