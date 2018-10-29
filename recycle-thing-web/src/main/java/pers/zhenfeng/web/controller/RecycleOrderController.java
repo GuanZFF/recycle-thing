@@ -75,6 +75,8 @@ public class RecycleOrderController {
         // COPY订单数据
         recycleOrderBOS.forEach(recycleOrderBO -> {
             RecycleOrderVO recycleOrderVO = new RecycleOrderVO();
+            recycleOrderVOS.add(recycleOrderVO);
+
             BeanUtils.copyProperties(recycleOrderBO, recycleOrderVO);
         });
 
