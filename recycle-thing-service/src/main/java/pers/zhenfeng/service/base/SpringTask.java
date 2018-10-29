@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import pers.zhenfeng.service.service.CommonService;
+import pers.zhenfeng.service.utils.LogUtil;
 
 import javax.annotation.Resource;
 

@@ -12,15 +12,12 @@ import pers.zhenfeng.api.bo.CommodityTypeBO;
 import pers.zhenfeng.api.bo.RecycleLogBO;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.util.BaseResultUtil;
-import pers.zhenfeng.service.base.LogUtil;
+import pers.zhenfeng.service.utils.LogUtil;
 import pers.zhenfeng.service.mapper.CommodityTypeMapper;
-import pers.zhenfeng.service.mapper.NumberManageMapper;
 import pers.zhenfeng.service.po.CommodityTypePO;
-import pers.zhenfeng.service.po.NumberManagePO;
 import pers.zhenfeng.service.po.RecycleLogPO;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 
 /**
