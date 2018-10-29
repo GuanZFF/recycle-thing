@@ -1,4 +1,4 @@
-package pers.zhenfeng.service.base;
+package pers.zhenfeng.service.utils;
 
 import com.google.common.collect.Lists;
 import pers.zhenfeng.core.constant.LogType;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class LogUtil {
 
-    static List<RecycleLogPO> recycleLogPOS = Lists.newArrayList();
+    public static List<RecycleLogPO> recycleLogPOS = Lists.newArrayList();
 
     public static void insertLog(RecycleLogPO recycleLogPO) {
         recycleLogPOS.add(recycleLogPO);
