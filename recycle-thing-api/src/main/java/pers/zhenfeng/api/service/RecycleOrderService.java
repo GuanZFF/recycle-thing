@@ -19,10 +19,10 @@ import java.util.List;
 @Component
 public interface RecycleOrderService {
 
-    @RequestMapping("insert")
+    @RequestMapping("/order/insert")
     BaseResult<Integer> insert(@RequestBody RecycleOrderBO recycleOrderBO);
 
-    @RequestMapping("getRecycleOrderList")
+    @RequestMapping("/order/getRecycleOrderList")
     BaseResult<List<RecycleOrderBO>> getRecycleOrderList(@RequestParam("uid") String uid);
 
 }
