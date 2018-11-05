@@ -10,7 +10,7 @@
         <version>1.5.13.RELEASE</version>
     </parent>
 
-    <groupId>pers.pers.zhenfeng</groupId>
+    <groupId>pers.zhenfeng</groupId>
     <artifactId>recycle-thing</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
