@@ -1,5 +1,5 @@
 FROM java:8
 
-COPY ./jar /tmp
+VOLUME /tmp /tmp
 RUN mkdir data
-COPY ./data /data
+VOLUME /data /data

@@ -11,8 +11,16 @@ import java.util.Properties;
  */
 public class FileUtil {
 
-    public static final String PATH = "/data/server.properties";
+    /**
+     * 配置文件路径
+     */
+    public static final String PATH = "/data/config.properties";
+
+    /**
+     * 读取文件编码
+     */
     public static final String CHARSET_NAME = "utf-8";
+
     public static final String DEFAULT_ZONE = "defaultZone";
 
     /**

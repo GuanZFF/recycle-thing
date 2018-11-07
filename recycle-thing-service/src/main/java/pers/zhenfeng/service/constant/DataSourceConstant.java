@@ -2,15 +2,11 @@ package pers.zhenfeng.service.constant;
 
 public interface DataSourceConstant {
 
-    String CHARSET_NAME = "UTF-8";
+    String DRIVER_KEY = "driver";
 
-    String CONFIG_FILE_PATH = "/data/db.properties";
+    String URL_KEY = "url";
 
-    String DRIVER = "driver";
+    String USERNAME_KEY = "username";
 
-    String URL = "url";
-
-    String USERNAME = "username";
-
-    String PASSWORD = "password";
+    String PASSWORD_KEY = "password";
 }
