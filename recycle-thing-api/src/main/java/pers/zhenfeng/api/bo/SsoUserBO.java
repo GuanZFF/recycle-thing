@@ -1,10 +1,12 @@
-package pers.zhenfeng.service.po;
+package pers.zhenfeng.api.bo;
+
+import java.util.List;
 
 /**
  * @author Grow-Worm
- * @date 2018/11/05
+ * @date 2018/11/09
  */
-public class OssUserPO extends BasePO {
+public class SsoUserBO {
 
     private Integer id;
 
@@ -15,6 +17,8 @@ public class OssUserPO extends BasePO {
     private String iphone;
 
     private Integer sex;
+
+    private List<SsoRoleBO> ssoRoleBOS;
 
     public Integer getId() {
         return id;
@@ -54,5 +58,13 @@ public class OssUserPO extends BasePO {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public List<SsoRoleBO> getSsoRoleBOS() {
+        return ssoRoleBOS;
+    }
+
+    public void setSsoRoleBOS(List<SsoRoleBO> ssoRoleBOS) {
+        this.ssoRoleBOS = ssoRoleBOS;
     }
 }

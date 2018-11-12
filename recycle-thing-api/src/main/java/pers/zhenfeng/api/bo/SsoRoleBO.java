@@ -1,10 +1,10 @@
-package pers.zhenfeng.service.po;
+package pers.zhenfeng.api.bo;
 
 /**
  * @author Grow-Worm
- * @date 2018/11/05
+ * @date 2018/11/09
  */
-public class OssRolePO extends BasePO {
+public class SsoRoleBO {
 
     private Integer id;
 

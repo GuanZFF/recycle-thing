@@ -4,7 +4,7 @@ package pers.zhenfeng.service.po;
  * @author Grow-Worm
  * @date 2018/11/05
  */
-public class OssUserRolePO extends BasePO {
+public class SsoUserRolePO extends BasePO {
 
     private Integer id;
 
