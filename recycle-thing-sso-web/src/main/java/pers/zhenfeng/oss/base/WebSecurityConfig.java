@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/recycle/**").permitAll()
-                .antMatchers("/**").hasAuthority("user")
+                .antMatchers("/**").hasAnyRole("user")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/recycle/login").permitAll()

@@ -37,7 +37,7 @@ public class RecycleController {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
             Authentication authenticate = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(authenticate);
-            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+//            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         } catch (AuthenticationException e) {
             SecurityContextHolder.clearContext();
             return BaseResultUtil.fail(ResultCode.UNAUTH.getCode(), "认证失败");
