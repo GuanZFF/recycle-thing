@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.zhenfeng.service.mapper.RecycleTokenMapper">
+
+    <insert id="insert" parameterType="pers.zhenfeng.service.po.SsoTokenPO" useGeneratedKeys="true" keyProperty="id">
+        insert into sso_token (token_value, username, series, date, is_delete, create_time, create_by, update_time, update_by)
+        values (#{tokenValue}, #{username}, #{series}, #{date}, 0, now(), #{createBy}, now(), #{createBy});
+    </insert>
+
+    <select id="getTokenBySeries" resultType="pers.zhenfeng.service.po.SsoTokenPO">
+        select * from sso_token where is_delete = 0 and series = #{series}
+    </select>
+
+</mapper>

@@ -20,8 +20,8 @@ public class RecycleServiceFallback implements RecycleService {
     @Override
     public BaseResult<SsoUserBO> loadSsoUserByUsername(String username) {
         SsoUserBO ssoUserBO = new SsoUserBO();
-        ssoUserBO.setUsername("user");
-        ssoUserBO.setPassword("password123");
+        ssoUserBO.setUsername("root");
+        ssoUserBO.setPassword("E10ADC3949BA59ABBE56E057F20F883E");
 
         SsoRoleBO ssoRoleBO = new SsoRoleBO();
         ssoRoleBO.setRoleName("user");

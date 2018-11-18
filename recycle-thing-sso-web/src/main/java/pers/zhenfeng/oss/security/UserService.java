@@ -1,9 +1,5 @@
-package pers.zhenfeng.oss.base;
+package pers.zhenfeng.oss.security;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +11,7 @@ import pers.zhenfeng.api.service.RecycleService;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.util.BaseResultUtil;
 
-import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -28,13 +21,16 @@ import java.util.stream.Collectors;
 @Component
 public class UserService implements UserDetailsService {
 
-    @Resource
     private RecycleService recycleService;
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserService(RecycleService recycleService) {
+        this.recycleService = recycleService;
+    }
 
-        BaseResult<SsoUserBO> result = recycleService.loadSsoUserByUsername(s);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        BaseResult<SsoUserBO> result = recycleService.loadSsoUserByUsername(username);
         if (BaseResultUtil.isSuccess(result)) {
             SsoUserBO ssoUserBO = result.getData();
             List<String> roleList = ssoUserBO.getSsoRoleBOS().stream().map(SsoRoleBO::getRoleName).collect(Collectors.toList());

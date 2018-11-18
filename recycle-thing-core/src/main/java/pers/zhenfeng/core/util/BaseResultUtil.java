@@ -10,6 +10,9 @@ import java.util.List;
 public class BaseResultUtil {
 
     public static Boolean isSuccess(BaseResult baseResult) {
+        if (baseResult == null) {
+            return false;
+        }
         return baseResult.getCode() == ResultCode.SUCCESS.getCode();
     }
 
