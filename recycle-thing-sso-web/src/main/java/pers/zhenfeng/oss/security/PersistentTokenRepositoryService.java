@@ -1,6 +1,8 @@
 package pers.zhenfeng.oss.security;
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ import java.util.Date;
 @Component
 public class PersistentTokenRepositoryService implements PersistentTokenRepository {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(PersistentTokenRepositoryService.class);
+
     private RecycleTokenService recycleTokenService;
 
     public PersistentTokenRepositoryService(RecycleTokenService recycleTokenService) {
@@ -28,47 +32,72 @@ public class PersistentTokenRepositoryService implements PersistentTokenReposito
 
     @Override
     public void createNewToken(PersistentRememberMeToken token) {
-        RedisUtil.setValue(token.getSeries(), JSON.toJSONString(token));
+        try {
+            RedisUtil.setValue(token.getSeries(), JSON.toJSONString(token));
+        } catch (Exception e) {
+            LOGGER.error("redis存储token失败", e);
+        }
 
-        SsoTokenBO ssoTokenBO = new SsoTokenBO();
-        ssoTokenBO.setSeries(token.getSeries());
-        ssoTokenBO.setDate(token.getDate());
-        ssoTokenBO.setTokenValue(token.getTokenValue());
-        ssoTokenBO.setUsername(token.getUsername());
+        try {
+            SsoTokenBO ssoTokenBO = new SsoTokenBO();
+            ssoTokenBO.setSeries(token.getSeries());
+            ssoTokenBO.setDate(token.getDate());
+            ssoTokenBO.setTokenValue(token.getTokenValue());
+            ssoTokenBO.setUsername(token.getUsername());
 
-        recycleTokenService.insertToken(ssoTokenBO);
+            recycleTokenService.insertToken(ssoTokenBO);
+        } catch (Exception e) {
+            LOGGER.error("database存储token失败", e);
+        }
     }
 
     @Override
     public void updateToken(String series, String tokenValue, Date lastUsed) {
-        String token = RedisUtil.getValueByKey(series);
-        if (StringUtils.isEmpty(token)) {
-            return;
+        try {
+            String token = RedisUtil.getValueByKey(series);
+            if (StringUtils.isEmpty(token)) {
+                return;
+            }
+            PersistentRememberMeToken oldToken = JSON.parseObject(token, PersistentRememberMeToken.class);
+
+            PersistentRememberMeToken newToken = new PersistentRememberMeToken(oldToken.getUsername(), series, tokenValue, lastUsed);
+
+            RedisUtil.setValue(newToken.getSeries(), JSON.toJSONString(token));
+        } catch (Exception e) {
+            LOGGER.error("redis更新token失败", e);
         }
-        PersistentRememberMeToken oldToken = JSON.parseObject(token, PersistentRememberMeToken.class);
-
-        PersistentRememberMeToken newToken = new PersistentRememberMeToken(oldToken.getUsername(), series, tokenValue, lastUsed);
-
-        RedisUtil.setValue(newToken.getSeries(), JSON.toJSONString(token));
     }
 
     @Override
     public PersistentRememberMeToken getTokenForSeries(String seriesId) {
-        String token = RedisUtil.getValueByKey(seriesId);
-        if (!StringUtils.isEmpty(token)) {
-            return JSON.parseObject(token, PersistentRememberMeToken.class);
+        try {
+            String token = RedisUtil.getValueByKey(seriesId);
+            if (!StringUtils.isEmpty(token)) {
+                return JSON.parseObject(token, PersistentRememberMeToken.class);
+            }
+        } catch (Exception e) {
+            LOGGER.error("redis获取token失败", e);
         }
 
-        BaseResult<SsoTokenBO> tokenResult = recycleTokenService.getTokenBySeries(seriesId);
-        if (BaseResultUtil.isFail(tokenResult)) {
-            return null;
+        try {
+            BaseResult<SsoTokenBO> tokenResult = recycleTokenService.getTokenBySeries(seriesId);
+            if (BaseResultUtil.isFail(tokenResult)) {
+                return null;
+            }
+            SsoTokenBO tokenBO = tokenResult.getData();
+            return new PersistentRememberMeToken(tokenBO.getUsername(), tokenBO.getSeries(), tokenBO.getTokenValue(), tokenBO.getDate());
+        } catch (Exception e) {
+            LOGGER.error("redis获取token失败", e);
         }
-        SsoTokenBO tokenBO = tokenResult.getData();
-        return new PersistentRememberMeToken(tokenBO.getUsername(), tokenBO.getSeries(), tokenBO.getTokenValue(), tokenBO.getDate());
+        return null;
     }
 
     @Override
     public void removeUserTokens(String username) {
-        RedisUtil.remove(username);
+        try {
+            RedisUtil.remove(username);
+        } catch (Exception e) {
+            LOGGER.error("redis删除token失败", e);
+        }
     }
 }
