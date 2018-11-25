@@ -77,6 +77,7 @@ CREATE TABLE `recycle_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
+
 CREATE TABLE `recycle_order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_no` varchar(100) DEFAULT NULL COMMENT '订单编号',
@@ -96,6 +97,7 @@ CREATE TABLE `recycle_order` (
   `update_by` varchar(100) NOT NULL DEFAULT '' COMMENT '更新人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE `recycle_reverse_order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -130,3 +132,70 @@ CREATE TABLE `recycle_user` (
   `update_by` varchar(11) NOT NULL DEFAULT '' COMMENT '更新人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `sso_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `username` varchar(100) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(100) DEFAULT NULL COMMENT '密码',
+  `iphone` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `sex` int(11) DEFAULT NULL COMMENT '性别',
+  `is_delete` int(11) DEFAULT NULL COMMENT '是否删除',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+
+CREATE TABLE `sso_role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `role_name` varchar(100) DEFAULT NULL COMMENT '角色名称',
+  `is_delete` int(11) DEFAULT NULL COMMENT '是否删除',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+
+CREATE TABLE `sso_user_role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户ID',
+  `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
+  `is_delete` int(11) DEFAULT NULL COMMENT '是否有效',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户和角色关系表';
+
+
+CREATE TABLE `sso_authority` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `authority_name` varchar(100) DEFAULT NULL COMMENT '权限名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
+
+
+CREATE TABLE `sso_role_authority` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
+  `authority_id` int(11) DEFAULT NULL COMMENT '权限ID',
+  `is_delete` int(2) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色和权限关系表';
+
+
+CREATE TABLE `sso_token` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `token_value` varchar(255) DEFAULT NULL COMMENT 'token值',
+  `username` varchar(100) DEFAULT NULL COMMENT '用户名',
+  `series` varchar(100) DEFAULT NULL COMMENT '序列串',
+  `date` datetime DEFAULT NULL COMMENT '时间',
+  `is_delete` int(2) DEFAULT NULL COMMENT '是否删除',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(100) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(100) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户登陆时的token';

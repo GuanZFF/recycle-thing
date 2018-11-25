@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * @author Grow-Worm
  * @date 2018/11/08
  */
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String RECYCLE_LOGIN = "/recycle/login";
