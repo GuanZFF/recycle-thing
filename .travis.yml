@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - 8
+
+services:
+  - docker
+
+before_install:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker build -t recycle-thing .
+  - docker push gzfeng/recycle-thing
