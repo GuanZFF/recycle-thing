@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - 8
+  - "8"
 
 services:
   - docker
