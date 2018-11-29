@@ -4,6 +4,8 @@ jdk:
 
 script:
   - mvn clean package
+  - ls -l
+  - ls -lR /var/lib/docker/tmp/ | grep 'recycle-thing-service-1.0-SNAPSHOT.jar'
 
 services:
   - docker
@@ -12,3 +14,4 @@ before_install:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t recycle-thing .
   - docker push gzfeng/recycle-thing
+
