@@ -1,3 +1,3 @@
 FROM java:8
 
-ADD recycle-thing/recycle-thing-service/target/recycle-thing-service-1.0-SNAPSHOT.jar /tmp
+ADD recycle-thing-service/target/recycle-thing-service-1.0-SNAPSHOT.jar /tmp
