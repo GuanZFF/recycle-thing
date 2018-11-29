@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pers.zhenfeng.api.bo.RecycleOrderBO;
 import pers.zhenfeng.api.service.RecycleOrderService;
+import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.web.vo.RecycleOrderVO;
@@ -43,6 +44,26 @@ public class RecycleOrderController {
         BeanUtils.copyProperties(recycleOrderVO, recycleOrderBO);
 
         return recycleOrderService.insert(recycleOrderBO);
+    }
+
+    /**
+     * 分页获取用户订单列表
+     *
+     * @param pageNum  页号
+     * @param pageSize 页的数量
+     * @param uid      微信唯一值
+     *
+     * @return 分页订单数据
+     */
+    @RequestMapping("getRecycleOrderPage")
+    public BaseResult<BasePage<RecycleOrderVO>> getRecycleOrderPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                                                    @RequestParam("uid") String uid) {
+        if (StringUtils.isEmpty(uid)) {
+            return BaseResultUtil.emptyList();
+        }
+
+        return null;
     }
 
     /**
