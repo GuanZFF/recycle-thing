@@ -1,6 +1,9 @@
 language: java
 jdk:
-  - "8"
+  - oraclejdk8
+
+script:
+  - mvn clean package
 
 services:
   - docker
