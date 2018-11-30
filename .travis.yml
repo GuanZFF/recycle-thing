@@ -4,8 +4,6 @@ jdk:
 
 script:
   - mvn clean package
-  - ls -l
-  - ls -lR | grep 'recycle-thing-service-1.0-SNAPSHOT.jar'
 
 services:
   - docker
