@@ -48,4 +48,32 @@
             uid = #{uid}
     </select>
 
+    <sql id="QueryOrderParam">
+        <if test="param.uid != null and param.uid != ''">
+            and uid = #{param.uid}
+        </if>
+    </sql>
+
+    <select id="getRecycleOrderPage" resultType="pers.zhenfeng.service.po.RecycleOrderPO">
+        select
+            *
+        from
+            recycle_order
+        where
+            is_delete = 0
+            <include refid="QueryOrderParam"/>
+        order by create_time desc
+        limit #{index}, #{size}
+    </select>
+
+    <select id="getRecycleOrderPageCount" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            recycle_order
+        where
+            is_delete = 0
+            <include refid="QueryOrderParam"/>
+    </select>
+
 </mapper>

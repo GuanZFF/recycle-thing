@@ -17,7 +17,9 @@ import pers.zhenfeng.core.constant.ResultCode;
 import pers.zhenfeng.core.util.BaseResultUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Grow-Worm
@@ -51,7 +53,8 @@ public class RecycleController {
     }
 
     @RequestMapping("login")
-    public ModelAndView login() {
+    public ModelAndView login(HttpServletResponse response) {
+        response.addCookie(new Cookie("username", "guanzf"));
         return new ModelAndView("/static/index.html");
     }
 

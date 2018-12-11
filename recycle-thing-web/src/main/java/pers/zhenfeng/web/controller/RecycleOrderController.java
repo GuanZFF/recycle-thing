@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pers.zhenfeng.api.bo.QueryOrderParam;
 import pers.zhenfeng.api.bo.RecycleOrderBO;
 import pers.zhenfeng.api.service.RecycleOrderService;
 import pers.zhenfeng.core.base.BasePage;
@@ -102,6 +103,31 @@ public class RecycleOrderController {
         });
 
         return BaseResultUtil.success(recycleOrderVOS);
+    }
+
+    @RequestMapping("getRecycleCommodityPage")
+    public BaseResult<BasePage<RecycleOrderVO>> getRecycleCommodityPage(@RequestParam("pageNum") Integer pageNum,
+                                                                        @RequestParam("pageSize") Integer pageSize,
+                                                                        @RequestParam("uid") String uid) {
+        QueryOrderParam queryOrderParam = new QueryOrderParam();
+        queryOrderParam.setUid(uid);
+        queryOrderParam.setPageNum(pageNum);
+        queryOrderParam.setPageSize(pageSize);
+
+        BaseResult<BasePage<RecycleOrderBO>> recycleOrderPage = recycleOrderService.getRecycleOrderPage(queryOrderParam);
+        if (BaseResultUtil.isFail(recycleOrderPage)) {
+            BasePage<RecycleOrderVO> basePage = new BasePage<>();
+
+            return BaseResultUtil.success(basePage);
+        }
+
+        BasePage<RecycleOrderVO> basePage = new BasePage<>();
+        recycleOrderPage.getData().getList().forEach(item -> {
+
+        });
+
+
+        return BaseResultUtil.success(basePage);
     }
 
 }

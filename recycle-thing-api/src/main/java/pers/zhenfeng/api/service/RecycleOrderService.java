@@ -4,9 +4,12 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pers.zhenfeng.api.bo.QueryOrderParam;
 import pers.zhenfeng.api.bo.RecycleOrderBO;
 import pers.zhenfeng.api.fallback.RecycleOrderServiceFallback;
+import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
 
 import java.util.List;
@@ -25,4 +28,6 @@ public interface RecycleOrderService {
     @RequestMapping("/order/getRecycleOrderList")
     BaseResult<List<RecycleOrderBO>> getRecycleOrderList(@RequestParam("uid") String uid);
 
+    @RequestMapping(value = "/order/getRecycleOrderPage", method = RequestMethod.POST)
+    BaseResult<BasePage<RecycleOrderBO>> getRecycleOrderPage(@RequestBody QueryOrderParam param);
 }

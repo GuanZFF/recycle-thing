@@ -3,6 +3,7 @@ package pers.zhenfeng.service.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+import pers.zhenfeng.api.bo.QueryOrderParam;
 import pers.zhenfeng.service.po.RecycleOrderPO;
 
 import java.util.List;
@@ -33,4 +34,8 @@ public interface RecycleOrderMapper {
      */
     List<RecycleOrderPO> getRecycleOrderList(@Param("uid") String uid);
 
+    List<RecycleOrderPO> getRecycleOrderPage(@Param("index") Integer index, @Param("size") Integer size,
+                                             @Param("param") QueryOrderParam param);
+
+    Integer getRecycleOrderPageCount(@Param("param") QueryOrderParam param);
 }

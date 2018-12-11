@@ -4,12 +4,12 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pers.zhenfeng.api.bo.QueryOrderParam;
 import pers.zhenfeng.api.bo.RecycleOrderBO;
+import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
+import pers.zhenfeng.core.util.BasePageUtil;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.core.util.NumberUtil;
 import pers.zhenfeng.service.constant.NumberManage;
@@ -87,6 +87,42 @@ public class RecycleOrderController {
         });
 
         return BaseResultUtil.success(recycleOrderBOS);
+    }
+
+    /**
+     * 分页获取订单信息
+     *
+     * @param param 查询参数
+     *
+     * @return 订单结果
+     */
+    @RequestMapping(value = "getRecycleOrderPage", method = RequestMethod.POST)
+    public BaseResult<BasePage<RecycleOrderBO>> getRecycleOrderPage(@RequestBody QueryOrderParam param) {
+        Integer index = (param.getPageNum() - 1) * param.getPageSize();
+
+        Integer count = recycleOrderMapper.getRecycleOrderPageCount(param);
+        if (count == null || count == 0) {
+            return BaseResultUtil.success(BasePageUtil.emptyPage());
+        }
+
+        List<RecycleOrderPO> list = recycleOrderMapper.getRecycleOrderPage(index, param.getPageSize(), param);
+
+        List<RecycleOrderBO> recycleOrderBOS = Lists.newArrayList();
+
+        if (CollectionUtils.isEmpty(list)) {
+            return BaseResultUtil.success(BasePageUtil.successPage(param.getPageNum(), param.getPageSize(), count, recycleOrderBOS));
+        }
+
+        BeanUtils.copyProperties(list, recycleOrderBOS);
+        list.forEach(item -> {
+            RecycleOrderBO recycleOrderBO = new RecycleOrderBO();
+            BeanUtils.copyProperties(item, recycleOrderBO);
+            recycleOrderBOS.add(recycleOrderBO);
+        });
+
+        BasePage<RecycleOrderBO> basePage = BasePageUtil.successPage(param.getPageNum(), param.getPageSize(), count, recycleOrderBOS);
+
+        return BaseResultUtil.success(basePage);
     }
 
 }
