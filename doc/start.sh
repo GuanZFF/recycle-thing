@@ -34,7 +34,7 @@ elif [[ $1 == 'web' ]]; then
 
     docker pull gzfeng/recycle-thing:$2
 
-    docker run -e pro='web' -p 8081:8081 --name recycle_web -it gzfeng/recycle-thing:$2
+    docker run -e pro='web' -p 8082:8082 --name recycle_web -it gzfeng/recycle-thing:$2
 
 elif [[ $1 == 'sso' ]]; then
 
@@ -46,7 +46,7 @@ elif [[ $1 == 'sso' ]]; then
 
     docker pull gzfeng/recycle-thing:$2
 
-    docker run -e pro='sso' -p 8081:8081 --name recycle_sso -it gzfeng/recycle-thing:$2
+    docker run -e pro='sso' -p 8084:8084 --name recycle_sso -it gzfeng/recycle-thing:$2
 
 else
     echo '参数错误'
