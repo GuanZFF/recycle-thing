@@ -11,10 +11,8 @@ ADD recycle-thing-sso-web/target/recycle-thing-sso-web-1.0-SNAPSHOT.jar $path
 
 WORKDIR $path
 
-VOLUME /data
-
-COPY launch-docker.sh /usr/local/bin/
+COPY doc/launch-docker.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/launch-docker.sh
 
-CMD ["launch-docker.sh"]
+CMD launch-docker.sh $pro
