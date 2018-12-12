@@ -24,7 +24,7 @@ if [[ $1 == 'server' ]]; then
 
     docker container rm recycle_server
 
-    docker run -d -p 8080:8080 --name recycle_server -it --network mynetwork --ip 172.18.0.6 gzfeng/recycle-thing:$2 /bin/bash
+    docker run -d -p 8080:8080 --name recycle_server -it --network mynetwork --ip 172.18.0.2 gzfeng/recycle-thing:$2 /bin/bash
 
     docker exec recycle_server launch-docker.sh server
 
@@ -34,7 +34,7 @@ elif [[ $1 == 'service' ]]; then
 
     docker container rm recycle_service
 
-    docker run -d -p 8081:8081 --name recycle_service -it -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
+    docker run -d -p 8081:8081 --name recycle_service -it --network mynetwork --ip 172.18.0.3 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
 
     docker exec recycle_service launch-docker.sh service
 
@@ -44,7 +44,7 @@ elif [[ $1 == 'web' ]]; then
 
     docker container rm recycle_web
 
-    docker run -d -p 8082:8082 --name recycle_web -it -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
+    docker run -d -p 8082:8082 --name recycle_web -it --network mynetwork --ip 172.18.0.4 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
 
     docker exec recycle_web launch-docker.sh web
 
@@ -54,7 +54,7 @@ elif [[ $1 == 'sso' ]]; then
 
     docker container rm recycle_sso
 
-    docker run -d -p 8084:8084 --name recycle_sso -it -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
+    docker run -d -p 8084:8084 --name recycle_sso -it --network mynetwork --ip 172.18.0.5 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
 
     docker exec recycle_sso launch-docker.sh sso
 

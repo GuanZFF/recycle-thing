@@ -2,7 +2,7 @@
 
 if [[ $1 == '' || $2 == '' ]]
 then
-    echo '请输入参数，例：deployment server RT1.0.0 或 deployment update_image RT1.0.0'
+    echo '请输入参数，例：deploy server/service/web/sso/delete_image/pull_image RT1.0.0'
     exit
 fi
 
