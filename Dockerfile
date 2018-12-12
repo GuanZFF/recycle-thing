@@ -14,5 +14,3 @@ WORKDIR $path
 COPY doc/launch-docker.sh /usr/local/bin/
 
 RUN chmod u+x /usr/local/bin/launch-docker.sh
-
-CMD launch-docker.sh $pro
