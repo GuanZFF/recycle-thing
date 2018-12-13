@@ -14,6 +14,7 @@ import pers.zhenfeng.api.service.RecycleOrderService;
 import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.util.BaseResultUtil;
+import pers.zhenfeng.core.util.DateUtil;
 import pers.zhenfeng.web.vo.RecycleOrderVO;
 
 import javax.annotation.Resource;
@@ -45,26 +46,6 @@ public class RecycleOrderController {
         BeanUtils.copyProperties(recycleOrderVO, recycleOrderBO);
 
         return recycleOrderService.insert(recycleOrderBO);
-    }
-
-    /**
-     * 分页获取用户订单列表
-     *
-     * @param pageNum  页号
-     * @param pageSize 页的数量
-     * @param uid      微信唯一值
-     *
-     * @return 分页订单数据
-     */
-    @RequestMapping("getRecycleOrderPage")
-    public BaseResult<BasePage<RecycleOrderVO>> getRecycleOrderPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                                                    @RequestParam("uid") String uid) {
-        if (StringUtils.isEmpty(uid)) {
-            return BaseResultUtil.emptyList();
-        }
-
-        return null;
     }
 
     /**
@@ -105,29 +86,64 @@ public class RecycleOrderController {
         return BaseResultUtil.success(recycleOrderVOS);
     }
 
-    @RequestMapping("getRecycleCommodityPage")
-    public BaseResult<BasePage<RecycleOrderVO>> getRecycleCommodityPage(@RequestParam("pageNum") Integer pageNum,
-                                                                        @RequestParam("pageSize") Integer pageSize,
-                                                                        @RequestParam("uid") String uid) {
+    /**
+     * 分页获取用户订单列表
+     *
+     * @param pageNum  页号
+     * @param pageSize 页的数量
+     * @param uid      微信唯一值
+     *
+     * @return 分页订单数据
+     */
+    @RequestMapping("getRecycleOrderPage")
+    public BaseResult<BasePage<RecycleOrderVO>> getRecycleOrderPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                    @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                                                    @RequestParam("uid") String uid) {
+        if (StringUtils.isEmpty(uid)) {
+            BaseResultUtil.fail("没有Uid参数");
+        }
+
+        // 封装参数
         QueryOrderParam queryOrderParam = new QueryOrderParam();
         queryOrderParam.setUid(uid);
         queryOrderParam.setPageNum(pageNum);
         queryOrderParam.setPageSize(pageSize);
 
+        // 获取服务器数据
         BaseResult<BasePage<RecycleOrderBO>> recycleOrderPage = recycleOrderService.getRecycleOrderPage(queryOrderParam);
         if (BaseResultUtil.isFail(recycleOrderPage)) {
             BasePage<RecycleOrderVO> basePage = new BasePage<>();
 
             return BaseResultUtil.success(basePage);
         }
+        BasePage<RecycleOrderBO> orderPageData = recycleOrderPage.getData();
 
+        // 封装返回的信息
         BasePage<RecycleOrderVO> basePage = new BasePage<>();
-        recycleOrderPage.getData().getList().forEach(item -> {
+        basePage.setHasNextPage(orderPageData.getHasNextPage());
+        basePage.setCount(orderPageData.getCount());
+        basePage.setPageNum(orderPageData.getPageNum());
+        basePage.setPageSize(orderPageData.getPageSize());
 
+        List<RecycleOrderVO> orderVOS = Lists.newArrayList();
+        basePage.setList(orderVOS);
+
+        // 转换BO到VO
+        orderPageData.getList().forEach(item -> {
+            RecycleOrderVO recycleOrderVO = new RecycleOrderVO();
+            BeanUtils.copyProperties(item, recycleOrderVO);
+
+            recycleOrderVO.setOrderTime(DateUtil.getDateString(DateUtil.YYYY_MM_DD_HH_MM_SS, item.getOrderTime()));
+
+            orderVOS.add(recycleOrderVO);
         });
 
-
         return BaseResultUtil.success(basePage);
+    }
+
+    public static <T, E> BasePage<T> convertPageObj(BasePage<E> source) {
+
+        return null;
     }
 
 }
