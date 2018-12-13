@@ -117,6 +117,9 @@ public class RecycleOrderController {
         list.forEach(item -> {
             RecycleOrderBO recycleOrderBO = new RecycleOrderBO();
             BeanUtils.copyProperties(item, recycleOrderBO);
+
+            recycleOrderBO.setOrderTime(item.getCreateTime());
+
             recycleOrderBOS.add(recycleOrderBO);
         });
 

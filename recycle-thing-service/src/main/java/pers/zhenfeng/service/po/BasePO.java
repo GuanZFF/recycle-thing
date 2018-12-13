@@ -1,6 +1,7 @@
 package pers.zhenfeng.service.po;
 
 import javax.xml.crypto.Data;
+import java.util.Date;
 
 /**
  * @author Grow-Worm
@@ -11,11 +12,11 @@ public class BasePO {
 
     private String createBy;
 
-    private Data createTime;
+    private Date createTime;
 
     private String updateBy;
 
-    private Data updateTime;
+    private Date updateTime;
 
     public Integer getIsDelete() {
         return isDelete;
@@ -33,11 +34,11 @@ public class BasePO {
         this.createBy = createBy;
     }
 
-    public Data getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Data createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -49,11 +50,11 @@ public class BasePO {
         this.updateBy = updateBy;
     }
 
-    public Data getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Data updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 }

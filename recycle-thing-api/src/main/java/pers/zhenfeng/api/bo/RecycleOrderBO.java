@@ -30,6 +30,8 @@ public class RecycleOrderBO {
 
     private String remark;
 
+    private Date orderTime;
+
     public Integer getId() {
         return id;
     }
@@ -116,5 +118,13 @@ public class RecycleOrderBO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
     }
 }

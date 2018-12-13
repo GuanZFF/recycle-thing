@@ -58,6 +58,16 @@ elif [[ $1 == 'sso' ]]; then
 
     docker exec recycle_sso launch-docker.sh sso
 
+elif [[ $1 == 'sso' ]]; then
+
+    docker container stop recycle_zuul
+
+    docker container rm recycle_zuul
+
+    docker run -d -p 8083:8083 --name recycle_zuul -it --network mynetwork --ip 172.18.0.6 gzfeng/recycle-thing:$2 /bin/bash
+
+    docker exec recycle_zuul launch-docker.sh zuul
+
 else
     echo '启动容器时参数错误'
 fi

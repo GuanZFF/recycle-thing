@@ -18,6 +18,10 @@ elif [[ $1 == 'sso' ]]; then
 
     nohup java -jar /pro/recycle-thing-sso-web-1.0-SNAPSHOT.jar > sso.file 2>&1 &
 
+elif [[ $1 == 'zuul' ]]; then
+
+    nohup java -jar /pro/recycle-thing-zuul-1.0-SNAPSHOT.jar > zuul.file 2>&1 &
+
 else
     echo '参数无效'
 fi

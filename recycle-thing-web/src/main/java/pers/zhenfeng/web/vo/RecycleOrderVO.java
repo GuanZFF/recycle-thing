@@ -1,6 +1,5 @@
 package pers.zhenfeng.web.vo;
 
-import java.util.Date;
 
 /**
  * @author Grow-Worm
@@ -20,15 +19,17 @@ public class RecycleOrderVO {
 
     private String phone;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
 
     private String orderImg;
 
     private Integer status;
 
     private String remark;
+
+    private String orderTime;
 
     public Integer getId() {
         return id;
@@ -78,19 +79,19 @@ public class RecycleOrderVO {
         this.phone = phone;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -116,5 +117,13 @@ public class RecycleOrderVO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
     }
 }
