@@ -48,7 +48,7 @@ public class RecycleCollectorController {
     public BaseResult<RecycleCollectorBO> getRecycleCollectorByNo(@RequestParam("collectorNo") String collectorNo) {
         RecycleCollectorPO recycleCommodityPO = recycleCollectorMapper.getRecycleCollectorByNo(collectorNo);
         if (ObjectUtils.isEmpty(recycleCommodityPO)) {
-            return BaseResultUtil.success();
+            return BaseResultUtil.fail(ResultMsg.QUERY_DATA_NULL.getMsg());
         }
 
         RecycleCollectorBO recycleCollectorBO = new RecycleCollectorBO();

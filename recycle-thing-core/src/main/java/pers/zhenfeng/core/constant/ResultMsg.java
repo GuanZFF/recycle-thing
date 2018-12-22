@@ -1,7 +1,7 @@
 package pers.zhenfeng.core.constant;
 
 public enum ResultMsg {
-    SUCCESS("success"), FAIL("fail"), FALLBACK("熔断异常"), PARAM_ERROR("参数错误，不符合规则或者存在空");
+    SUCCESS("success"), FAIL("fail"), FALLBACK("熔断异常"), PARAM_ERROR("参数错误，不符合规则或者存在空"), QUERY_DATA_NULL("查询的数据不存在");
 
     private String msg;
 
