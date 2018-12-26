@@ -35,6 +35,8 @@ public class CommodityParam {
 
     private BigDecimal actualSellPrice;
 
+    private Integer damageDegree;
+
     private String remark;
 
     public Integer getId() {
@@ -139,6 +141,14 @@ public class CommodityParam {
 
     public void setActualSellPrice(BigDecimal actualSellPrice) {
         this.actualSellPrice = actualSellPrice;
+    }
+
+    public Integer getDamageDegree() {
+        return damageDegree;
+    }
+
+    public void setDamageDegree(Integer damageDegree) {
+        this.damageDegree = damageDegree;
     }
 
     public String getRemark() {
