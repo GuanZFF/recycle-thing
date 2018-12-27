@@ -11,5 +11,5 @@ services:
 after_script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t recycle-thing .
-  - docker tag recycle-thing:latest gzfeng/recycle-thing:RT1.0.5
-  - docker push gzfeng/recycle-thing:RT1.0.5
+  - docker tag recycle-thing:latest gzfeng/recycle-thing:RT1.0.6
+  - docker push gzfeng/recycle-thing:RT1.0.6
