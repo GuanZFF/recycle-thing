@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pers.zhenfeng.api.bo.CommodityTypeBO;
 import pers.zhenfeng.api.bo.RecycleLogBO;
 import pers.zhenfeng.core.base.BaseResult;
+import pers.zhenfeng.core.constant.ResultMsg;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.service.utils.LogUtil;
 import pers.zhenfeng.service.mapper.CommodityTypeMapper;
@@ -46,6 +47,33 @@ public class CommonController {
         });
 
         return BaseResultUtil.success(commodityTypeBOS);
+    }
+
+    /**
+     * 通过ID获取商品类型数据
+     *
+     * @param id 商品类型ID
+     *
+     * @return 商品类型
+     */
+    @RequestMapping("getCommodityType")
+    public BaseResult<CommodityTypeBO> getCommodityType(@RequestParam("id") Integer id) {
+        if (ObjectUtils.isEmpty(id)) {
+            return BaseResultUtil.failParam();
+        }
+
+        // 调用商品类型数据
+        CommodityTypePO commodityTypePO = commodityTypeMapper.getCommodityType(id);
+
+        if (ObjectUtils.isEmpty(commodityTypePO)) {
+            return BaseResultUtil.fail(ResultMsg.QUERY_DATA_NULL.getMsg());
+        }
+
+        // 数据映射PO -> BO
+        CommodityTypeBO commodityTypeBO = new CommodityTypeBO();
+        BeanUtils.copyProperties(commodityTypePO, commodityTypeBO);
+
+        return BaseResultUtil.success(commodityTypeBO);
     }
 
     @RequestMapping("insertCommodityType")

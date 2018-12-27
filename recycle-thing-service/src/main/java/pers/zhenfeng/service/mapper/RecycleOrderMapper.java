@@ -23,7 +23,7 @@ public interface RecycleOrderMapper {
      *
      * @return 插入结果
      */
-    Integer insert(@Param("recycleOrderPO") RecycleOrderPO recycleOrderPO);
+    Integer insert(RecycleOrderPO recycleOrderPO);
 
     /**
      * 获取用户所有订单列表

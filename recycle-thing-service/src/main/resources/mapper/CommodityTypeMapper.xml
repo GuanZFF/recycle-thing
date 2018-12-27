@@ -41,4 +41,15 @@
             is_delete = 0
     </select>
 
+    <select id="getCommodityType" resultType="pers.zhenfeng.service.po.CommodityTypePO">
+        select
+            *
+        from
+            commodity_type
+        where
+            is_delete = 0
+        and
+            id = #{id}
+    </select>
+
 </mapper>

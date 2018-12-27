@@ -22,6 +22,11 @@ public class CommonServiceFallback implements CommonService {
     }
 
     @Override
+    public BaseResult<CommodityTypeBO> getCommodityType(Integer id) {
+        return BaseResultUtil.fallback();
+    }
+
+    @Override
     public BaseResult<Integer> insertCommodityType(CommodityTypeBO commodityTypeBO) {
         return BaseResultUtil.fallback();
     }

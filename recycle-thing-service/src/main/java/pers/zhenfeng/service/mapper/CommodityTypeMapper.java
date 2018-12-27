@@ -19,6 +19,8 @@ public interface CommodityTypeMapper {
 
     List<CommodityTypePO> getAllCommodityType();
 
+    CommodityTypePO getCommodityType(@Param("id") Integer id);
+
     Integer deleteCommodityType(@Param("id") Integer id);
 
 }

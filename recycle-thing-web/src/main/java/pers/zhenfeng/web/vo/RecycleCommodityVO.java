@@ -1,5 +1,7 @@
 package pers.zhenfeng.web.vo;
 
+import pers.zhenfeng.api.bo.RecycleCollectorBO;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -26,6 +28,8 @@ public class RecycleCommodityVO {
 
     private Integer commodityType;
 
+    private String commodityTypeDesc;
+
     private String recycleTime;
 
     private BigDecimal recyclePrice;
@@ -35,6 +39,8 @@ public class RecycleCommodityVO {
     private BigDecimal actualSellPrice;
 
     private String remark;
+
+    private RecycleCollectorBO recycleCollectorBO;
 
     public Integer getId() {
         return id;
@@ -146,5 +152,21 @@ public class RecycleCommodityVO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getCommodityTypeDesc() {
+        return commodityTypeDesc;
+    }
+
+    public void setCommodityTypeDesc(String commodityTypeDesc) {
+        this.commodityTypeDesc = commodityTypeDesc;
+    }
+
+    public RecycleCollectorBO getRecycleCollectorBO() {
+        return recycleCollectorBO;
+    }
+
+    public void setRecycleCollectorBO(RecycleCollectorBO recycleCollectorBO) {
+        this.recycleCollectorBO = recycleCollectorBO;
     }
 }

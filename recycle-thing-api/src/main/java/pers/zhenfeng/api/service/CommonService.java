@@ -23,6 +23,9 @@ public interface CommonService {
     @RequestMapping("/common/getAllCommodityType")
     BaseResult<List<CommodityTypeBO>> getAllCommodityType();
 
+    @RequestMapping("/common/getCommodityType")
+    BaseResult<CommodityTypeBO> getCommodityType(@RequestParam("id") Integer id);
+
     @RequestMapping("/common/insertCommodityType")
     BaseResult<Integer> insertCommodityType(@RequestBody CommodityTypeBO commodityTypeBO);
 

@@ -13,12 +13,15 @@ import pers.zhenfeng.api.bo.RecycleOrderBO;
 import pers.zhenfeng.api.service.RecycleOrderService;
 import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
+import pers.zhenfeng.core.constant.OrderStatus;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.core.util.DateUtil;
 import pers.zhenfeng.web.vo.RecycleOrderVO;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +47,13 @@ public class RecycleOrderController {
         RecycleOrderBO recycleOrderBO = new RecycleOrderBO();
 
         BeanUtils.copyProperties(recycleOrderVO, recycleOrderBO);
+
+        if (StringUtils.isEmpty(recycleOrderVO.getStartTime()) || StringUtils.isEmpty(recycleOrderVO.getEndTime())) {
+            Calendar calendar = Calendar.getInstance();
+            recycleOrderBO.setStartTime(calendar.getTime());
+            calendar.add(Calendar.DATE, 1);
+            recycleOrderBO.setEndTime(new Date());
+        }
 
         return recycleOrderService.insert(recycleOrderBO);
     }
