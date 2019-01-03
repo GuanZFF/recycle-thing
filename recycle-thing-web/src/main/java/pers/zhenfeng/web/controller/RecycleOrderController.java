@@ -52,7 +52,10 @@ public class RecycleOrderController {
             Calendar calendar = Calendar.getInstance();
             recycleOrderBO.setStartTime(calendar.getTime());
             calendar.add(Calendar.DATE, 1);
-            recycleOrderBO.setEndTime(new Date());
+            recycleOrderBO.setEndTime(calendar.getTime());
+        } else {
+            recycleOrderBO.setStartTime(DateUtil.getStringToDate(recycleOrderVO.getStartTime()));
+            recycleOrderBO.setEndTime(DateUtil.getStringToDate(recycleOrderVO.getEndTime()));
         }
 
         return recycleOrderService.insert(recycleOrderBO);
@@ -122,9 +125,7 @@ public class RecycleOrderController {
         // 获取服务器数据
         BaseResult<BasePage<RecycleOrderBO>> recycleOrderPage = recycleOrderService.getRecycleOrderPage(queryOrderParam);
         if (BaseResultUtil.isFail(recycleOrderPage)) {
-            BasePage<RecycleOrderVO> basePage = new BasePage<>();
-
-            return BaseResultUtil.success(basePage);
+            return BaseResultUtil.fail(recycleOrderPage.getMsg());
         }
         BasePage<RecycleOrderBO> orderPageData = recycleOrderPage.getData();
 

@@ -1,6 +1,8 @@
 package pers.zhenfeng.service.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import pers.zhenfeng.service.mapper.NumberManageMapper;
 import pers.zhenfeng.service.mapper.RecycleLogMapper;
 import pers.zhenfeng.service.po.NumberManagePO;
@@ -24,7 +26,13 @@ public class CommonServiceImpl implements CommonService {
     private RecycleLogMapper recycleLogMapper;
 
     public Integer getNumber(String key) {
+        if (StringUtils.isEmpty(key)) {
+            return 0;
+        }
         NumberManagePO numberManagePO = numberManageMapper.getNumberManage(key);
+        if (ObjectUtils.isEmpty(numberManagePO)) {
+            return 0;
+        }
         Integer value = numberManagePO.getValue() + (int) (Math.random() * 10);
         numberManageMapper.updateNumberManage(key, value);
         return value;

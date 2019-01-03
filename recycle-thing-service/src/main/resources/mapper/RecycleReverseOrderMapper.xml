@@ -2,4 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.zhenfeng.service.mapper.RecycleReverseOrderMapper">
 
+    <insert id="insert" parameterType="pers.zhenfeng.service.po.RecycleReverseOrderPO" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into
+            recycle_reverse_order (order_no, commodity_no, uid, address, phone, start_time, end_time, status, remark)
+        values
+            (#{orderNo}, #{commodityNo}, #{uid}, #{address}, #{phone}, #{startTime}, #{endTime}, #{status}, #{remark})
+    </insert>
+
+    <select id="getReverseOrders" resultType="pers.zhenfeng.service.po.RecycleReverseOrderPO">
+        select *
+        from
+            recycle_reverse_order
+        where
+            is_delete = 0
+        and
+            uid = #{uid}
+    </select>
+
+    <sql id="QueryOrderParam">
+        <if test="param.uid != null and param.uid != ''">
+            and uid = #{param.uid}
+        </if>
+    </sql>
+
+    <select id="getReverseOrderPage" resultType="pers.zhenfeng.service.po.RecycleReverseOrderPO">
+        select
+            *
+        from
+            recycle_reverse_order
+        where
+            is_delete = 0
+        <include refid="QueryOrderParam"/>
+        order by create_time desc
+        limit #{index}, #{size}
+    </select>
+
+    <select id="getReverseOrderPageCount" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            recycle_reverse_order
+        where
+            is_delete = 0
+        <include refid="QueryOrderParam"/>
+    </select>
+
 </mapper>

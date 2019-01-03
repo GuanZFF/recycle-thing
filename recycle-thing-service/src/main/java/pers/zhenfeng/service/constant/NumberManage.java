@@ -6,7 +6,7 @@ package pers.zhenfeng.service.constant;
  */
 public enum NumberManage {
 
-    COMMODITY("commodity"), COLLECTOR("collector"), ORDER("order");
+    COMMODITY("commodity"), COLLECTOR("collector"), ORDER("order"), REVERSE_ORDER("reverse_order");
 
     private String key;
 

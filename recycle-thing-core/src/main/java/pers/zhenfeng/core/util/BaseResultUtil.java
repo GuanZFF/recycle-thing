@@ -55,6 +55,14 @@ public class BaseResultUtil {
         return fail(ResultCode.FALLBACK.getCode(), ResultMsg.FALLBACK.getMsg());
     }
 
+    public static <T> BaseResult<T> fallback(T e) {
+        BaseResult<T> tTmsBaseResult = new BaseResult<>();
+        tTmsBaseResult.setCode(ResultCode.FALLBACK.getCode());
+        tTmsBaseResult.setMsg( ResultMsg.FALLBACK.getMsg());
+        tTmsBaseResult.setData(e);
+        return tTmsBaseResult;
+    }
+
 
     public static <T> BaseResult<T> fail(int resultCode, String resultDesc) {
         BaseResult<T> tTmsBaseResult = new BaseResult<>();
