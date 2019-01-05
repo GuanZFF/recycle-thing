@@ -94,8 +94,8 @@ public class RecycleReverseOrderController {
             RecycleReverseOrderVO reverseOrderVO = new RecycleReverseOrderVO();
             BeanUtils.copyProperties(item, reverseOrderVO);
 
-            reverseOrderVO.setStartTime(DateUtil.getDateString(DateUtil.YYYY_MM_DD_HH_MM_SS, item.getStartTime()));
-            reverseOrderVO.setEndTime(DateUtil.getDateString(DateUtil.YYYY_MM_DD_HH_MM_SS, item.getEndTime()));
+            reverseOrderVO.setStartTime(DateUtil.getDateString(DateUtil.MM_DD_HH_MM, item.getStartTime()));
+            reverseOrderVO.setEndTime(DateUtil.getDateString(DateUtil.MM_DD_HH_MM, item.getEndTime()));
 
             orderVOS.add(reverseOrderVO);
         });

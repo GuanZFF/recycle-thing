@@ -12,6 +12,8 @@ public class DateUtil {
 
     public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
+    public static String MM_DD_HH_MM = "MM-dd HH:mm";
+
     public static String YYYY_MM_DD = "yyyy-MM-dd";
 
     public static String getDateString(String format, Date time) {
