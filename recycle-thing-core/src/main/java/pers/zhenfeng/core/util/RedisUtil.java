@@ -22,10 +22,15 @@ public class RedisUtil {
 
         String host = properties.getProperty("redis.host");
         String port = properties.getProperty("redis.port");
+        String auth = properties.getProperty("redis.auth");
 
         assert host != null && port != null;
 
         jedis = new Jedis(host, Integer.parseInt(port));
+
+        if (auth != null) {
+            jedis.auth(auth);
+        }
     }
 
     public static String getValueByKey(String key) {
