@@ -51,11 +51,19 @@ public class RecycleCollectorController {
         return BaseResultUtil.success(recycleCollectorBO);
     }
 
+    /**
+     * 通过收货人编号获取收货人信息（redis中存在时优先调用redis）
+     *
+     * @param collectorNo 收货人单号
+     *
+     * @return 收货人信息
+     */
     @RequestMapping("getRecycleCollectorByNo")
     public BaseResult<RecycleCollectorBO> getRecycleCollectorByNo(@RequestParam("collectorNo") String collectorNo) {
 
         try {
             String collector = RedisUtil.getValueByKey(RedisKeyPrefix.recycleCollector + collectorNo);
+            LOGGER.info(collector);
 
             if (!StringUtils.isEmpty(collector)) {
                 RecycleCollectorBO recycleCollectorBO = JSON.parseObject(collector, RecycleCollectorBO.class);
@@ -116,8 +124,21 @@ public class RecycleCollectorController {
         return BaseResultUtil.success(id);
     }
 
+    /**
+     * 根据收集人单号删除收集人
+     *
+     * @param collectorNo 收集人单号
+     *
+     * @return 删除结果
+     */
     @RequestMapping("deleteRecycleCollector")
     public BaseResult<Integer> deleteRecycleCollector(@RequestParam("collectorNo") String collectorNo) {
+        try {
+            RedisUtil.remove(RedisKeyPrefix.recycleCollector + collectorNo);
+        } catch (Exception e) {
+            LOGGER.error("Del recycleCollectorBO failure by the redis", e);
+        }
+
         if (StringUtils.isEmpty(collectorNo)) {
             return BaseResultUtil.fail(ResultMsg.PARAM_ERROR.getMsg());
         }

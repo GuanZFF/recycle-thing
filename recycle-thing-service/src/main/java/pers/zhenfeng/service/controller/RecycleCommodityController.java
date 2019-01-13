@@ -1,20 +1,25 @@
 package pers.zhenfeng.service.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import pers.zhenfeng.api.bo.QueryCommodityParam;
+import pers.zhenfeng.api.bo.RecycleCollectorBO;
 import pers.zhenfeng.api.bo.RecycleCommodityBO;
 import pers.zhenfeng.core.base.BasePage;
 import pers.zhenfeng.core.base.BaseResult;
 import pers.zhenfeng.core.constant.CommodityStatus;
+import pers.zhenfeng.core.constant.RedisKeyPrefix;
 import pers.zhenfeng.core.util.BasePageUtil;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.core.util.NumberUtil;
+import pers.zhenfeng.core.util.RedisUtil;
 import pers.zhenfeng.service.constant.NumberManage;
 import pers.zhenfeng.service.mapper.NumberManageMapper;
 import pers.zhenfeng.service.mapper.RecycleCommodityMapper;
@@ -53,7 +58,18 @@ public class RecycleCommodityController {
 
     @RequestMapping("getRecycleCommodity")
     public BaseResult<RecycleCommodityBO> getRecycleCommodity(@RequestParam("commodityNo") String commodityNo) {
-        LOGGER.error("getRecycleCommodity");
+        try {
+            String commodity = RedisUtil.getValueByKey(RedisKeyPrefix.recycleCommodity + commodityNo);
+            LOGGER.info(commodity);
+
+            if (!StringUtils.isEmpty(commodity)) {
+                RecycleCommodityBO recycleCommodityPO = JSON.parseObject(commodity, RecycleCommodityBO.class);
+                return BaseResultUtil.success(recycleCommodityPO);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Get recycleCommodityPO failure by the redis", e);
+        }
+
         RecycleCommodityPO recycleCommodityPO = recycleCommodityMapper.getRecycleCommodityByNo(commodityNo);
         if (ObjectUtils.isEmpty(recycleCommodityPO)) {
             return BaseResultUtil.success();
@@ -62,6 +78,12 @@ public class RecycleCommodityController {
         RecycleCommodityBO recycleCommodityBO = new RecycleCommodityBO();
 
         BeanUtils.copyProperties(recycleCommodityPO, recycleCommodityBO);
+
+        try {
+            RedisUtil.setValue(RedisKeyPrefix.recycleCommodity + commodityNo, JSON.toJSONString(recycleCommodityBO));
+        } catch (Exception e) {
+            LOGGER.error("Set recycleCommodityBO failure by the redis", e);
+        }
 
         return BaseResultUtil.success(recycleCommodityBO);
     }
@@ -113,6 +135,12 @@ public class RecycleCommodityController {
 
     @RequestMapping("updateCommodityToStart")
     public BaseResult<Integer> updateCommodityToStart(@RequestParam("commodityNo") String commodityNo) {
+        try {
+            RedisUtil.remove(RedisKeyPrefix.recycleCommodity + commodityNo);
+        } catch (Exception e) {
+            LOGGER.error("Del recycleCommodityPO failure by the redis", e);
+        }
+
         Integer updateCol = recycleCommodityMapper.updateCommodityToStart(commodityNo);
         if (updateCol > 0) {
             return BaseResultUtil.success(updateCol);
@@ -122,6 +150,12 @@ public class RecycleCommodityController {
 
     @RequestMapping("updateCommodityToStop")
     public BaseResult<Integer> updateCommodityToStop(@RequestParam("commodityNo") String commodityNo) {
+        try {
+            RedisUtil.remove(RedisKeyPrefix.recycleCommodity + commodityNo);
+        } catch (Exception e) {
+            LOGGER.error("Del recycleCommodityPO failure by the redis", e);
+        }
+
         Integer updateCol = recycleCommodityMapper.updateCommodityToStop(commodityNo);
         if (updateCol > 0) {
             return BaseResultUtil.success(updateCol);

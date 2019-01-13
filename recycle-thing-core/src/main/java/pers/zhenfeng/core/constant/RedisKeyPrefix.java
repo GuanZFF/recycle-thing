@@ -15,4 +15,9 @@ public interface RedisKeyPrefix {
      * 收集人信息redis key前缀
      */
     String recycleCollector = "RECYCLE-COLLECTOR" + separatorChar;
+
+    /**
+     * 商品信息redis key前缀
+     */
+    String recycleCommodity = "RECYCLE-COMMODITY" + separatorChar;
 }
