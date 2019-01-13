@@ -42,6 +42,11 @@ public class RedisUtil {
         jedis.set(key, value);
     }
 
+    public static void setValueTime(String key, String value, int exprieTime) {
+        jedis.set(key, value);
+        jedis.expire(key, exprieTime);
+    }
+
     public static void remove(String key) {
         jedis.del(key);
     }
