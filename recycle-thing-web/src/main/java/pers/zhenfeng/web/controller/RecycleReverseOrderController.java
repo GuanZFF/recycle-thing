@@ -18,6 +18,7 @@ import pers.zhenfeng.core.util.DateUtil;
 import pers.zhenfeng.web.vo.RecycleReverseOrderVO;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -42,6 +43,18 @@ public class RecycleReverseOrderController {
     public BaseResult<Integer> insert(@RequestBody RecycleReverseOrderVO recycleReverseOrderVO) {
         RecycleReverseOrderBO reverseOrderBO = new RecycleReverseOrderBO();
 
+        // 设置默认时间
+        if (org.springframework.util.StringUtils.isEmpty(recycleReverseOrderVO.getStartTime()) || org.springframework.util.StringUtils.isEmpty(recycleReverseOrderVO.getEndTime())) {
+            Calendar calendar = Calendar.getInstance();
+            reverseOrderBO.setStartTime(calendar.getTime());
+            calendar.add(Calendar.DATE, 1);
+            reverseOrderBO.setEndTime(calendar.getTime());
+        } else {
+            reverseOrderBO.setStartTime(DateUtil.getStringToDate(recycleReverseOrderVO.getStartTime()));
+            reverseOrderBO.setEndTime(DateUtil.getStringToDate(recycleReverseOrderVO.getEndTime()));
+        }
+
+        // copy信息
         BeanUtils.copyProperties(recycleReverseOrderVO, reverseOrderBO);
 
         return recycleReverseOrderService.insert(reverseOrderBO);

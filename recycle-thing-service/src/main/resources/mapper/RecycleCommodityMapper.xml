@@ -95,7 +95,7 @@
         where
             is_delete = 0
         <include refid="QueryCommodityParam"/>
-        order by create_time desc
+        order by show_priority, create_time desc
         limit #{index}, #{size}
     </select>
 

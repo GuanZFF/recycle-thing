@@ -9,6 +9,11 @@ import java.util.Properties;
  * @date 2018/11/18
  */
 public class RedisUtil {
+
+    /**
+     * 表示1小时
+     */
+    private final static Integer DEFAULT_EXPIRE_TIME = 60 * 60;
     private final static Jedis jedis;
 
     static {
@@ -38,13 +43,12 @@ public class RedisUtil {
     }
 
     public static void setValue(String key, String value) {
-
-        jedis.set(key, value);
+        setValueTime(key, value, DEFAULT_EXPIRE_TIME);
     }
 
-    public static void setValueTime(String key, String value, int exprieTime) {
+    public static void setValueTime(String key, String value, int expireTime) {
         jedis.set(key, value);
-        jedis.expire(key, exprieTime);
+        jedis.expire(key, expireTime);
     }
 
     public static void remove(String key) {
