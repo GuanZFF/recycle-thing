@@ -14,6 +14,7 @@ import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.core.util.NumberUtil;
 import pers.zhenfeng.service.constant.NumberManage;
 import pers.zhenfeng.service.mapper.RecycleOrderMapper;
+import pers.zhenfeng.service.po.RecycleCollectorPO;
 import pers.zhenfeng.service.po.RecycleOrderPO;
 import pers.zhenfeng.service.service.CommonService;
 
@@ -55,6 +56,31 @@ public class RecycleOrderController {
         Integer id = recycleOrderMapper.insert(recycleOrderPO);
 
         return BaseResultUtil.success(id);
+    }
+
+    /**
+     * 通过订单号获取订单详情
+     *
+     * @param orderNo 订单号码
+     *
+     * @return 订单详情
+     */
+    @RequestMapping("getRecycleOrder")
+    public BaseResult<RecycleOrderBO> getRecycleOrder(@RequestParam("orderNo") String orderNo) {
+        if (StringUtils.isEmpty(orderNo)) {
+            return BaseResultUtil.failParam();
+        }
+        RecycleOrderPO recycleOrderPO = recycleOrderMapper.getRecycleOrder(orderNo);
+
+        if (recycleOrderPO == null) {
+            return BaseResultUtil.fail("订单不存在");
+        }
+
+        RecycleOrderBO recycleOrderBO = new RecycleOrderBO();
+
+        BeanUtils.copyProperties(recycleOrderPO, recycleOrderBO);
+
+        return BaseResultUtil.success(recycleOrderBO);
     }
 
     /**

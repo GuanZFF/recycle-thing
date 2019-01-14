@@ -29,6 +29,11 @@ public class RecycleOrderServiceFallback implements RecycleOrderService {
     }
 
     @Override
+    public BaseResult<RecycleOrderBO> getRecycleOrder(String orderNo) {
+        return BaseResultUtil.fallback();
+    }
+
+    @Override
     public BaseResult<BasePage<RecycleOrderBO>> getRecycleOrderPage(QueryOrderParam param) {
         return BaseResultUtil.fallback(BasePageUtil.<RecycleOrderBO>emptyPage());
     }

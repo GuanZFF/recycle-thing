@@ -28,6 +28,9 @@ public interface RecycleOrderService {
     @RequestMapping("/order/getRecycleOrderList")
     BaseResult<List<RecycleOrderBO>> getRecycleOrderList(@RequestParam("uid") String uid);
 
+    @RequestMapping("/order/getRecycleOrder")
+    BaseResult<RecycleOrderBO> getRecycleOrder(@RequestParam("orderNo") String orderNo);
+
     @RequestMapping(value = "/order/getRecycleOrderPage", method = RequestMethod.POST)
     BaseResult<BasePage<RecycleOrderBO>> getRecycleOrderPage(@RequestBody QueryOrderParam param);
 }

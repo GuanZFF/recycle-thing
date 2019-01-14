@@ -76,4 +76,15 @@
             <include refid="QueryOrderParam"/>
     </select>
 
+    <select id="getRecycleOrder" resultType="pers.zhenfeng.service.po.RecycleOrderPO">
+        select
+            *
+        from
+            recycle_order
+        where
+            is_delete = 0
+        and
+            order_no = #{orderNo}
+    </select>
+
 </mapper>

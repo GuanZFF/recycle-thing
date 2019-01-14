@@ -62,6 +62,33 @@ public class RecycleOrderController {
     }
 
     /**
+     * 通过订单号获取订单详情
+     *
+     * @param orderNo 订单号码
+     *
+     * @return 订单详情
+     */
+    @RequestMapping("getRecycleOrder")
+    public BaseResult<RecycleOrderVO> getRecycleOrder(@RequestParam("orderNo") String orderNo) {
+        if (StringUtils.isEmpty(orderNo)) {
+            return BaseResultUtil.failParam();
+        }
+
+        BaseResult<RecycleOrderBO> recycleOrder = recycleOrderService.getRecycleOrder(orderNo);
+        if (BaseResultUtil.isFail(recycleOrder)) {
+            return BaseResultUtil.fail(recycleOrder.getCode(), recycleOrder.getMsg());
+        }
+
+        RecycleOrderBO recycleOrderBO = recycleOrder.getData();
+
+        RecycleOrderVO recycleOrderVO = new RecycleOrderVO();
+        recycleOrderVO.setOrderTime(DateUtil.getDateString(DateUtil.YYYY_MM_DD_HH_MM_SS, recycleOrderBO.getStartTime()));
+        BeanUtils.copyProperties(recycleOrderBO, recycleOrderVO);
+
+        return BaseResultUtil.success(recycleOrderVO);
+    }
+
+    /**
      * 通过用户ID获取订单列表
      *
      * @param uid 用户唯一ID
