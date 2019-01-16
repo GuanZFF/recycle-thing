@@ -14,9 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "pers.zhenfeng.api.service")
 @ComponentScan(basePackages = {"pers.zhenfeng.api", "pers.zhenfeng.oss"})
-public class ApplicationSSOWeb {
+public class ApplicationOss {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApplicationSSOWeb.class, args);
+        SpringApplication.run(ApplicationOss.class, args);
     }
 }

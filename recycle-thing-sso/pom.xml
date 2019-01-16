@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>recycle-thing-client</artifactId>
+    <artifactId>recycle-thing-sso</artifactId>
 
 
 </project>

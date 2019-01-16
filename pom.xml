@@ -18,12 +18,14 @@
     <modules>
         <module>recycle-thing-server</module>
         <module>recycle-thing-web</module>
-        <module>recycle-thing-client</module>
-        <module>recycle-thing-sso-web</module>
+        <module>recycle-thing-oss</module>
         <module>recycle-thing-core</module>
         <module>recycle-thing-service</module>
         <module>recycle-thing-api</module>
         <module>recycle-thing-zuul</module>
+        <module>recycle-thing-user</module>
+        <module>recycle-thing-pay</module>
+        <module>recycle-thing-sso</module>
     </modules>
 
     <dependencyManagement>

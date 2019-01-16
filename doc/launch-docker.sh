@@ -14,9 +14,9 @@ elif [[ $1 == 'web' ]]; then
 
     nohup java -jar /pro/recycle-thing-web-1.0-SNAPSHOT.jar > web.file 2>&1 &
 
-elif [[ $1 == 'sso' ]]; then
+elif [[ $1 == 'oss' ]]; then
 
-    nohup java -jar /pro/recycle-thing-sso-web-1.0-SNAPSHOT.jar > sso.file 2>&1 &
+    nohup java -jar /pro/recycle-thing-oss-1.0-SNAPSHOT.jar > oss.file 2>&1 &
 
 elif [[ $1 == 'zuul' ]]; then
 

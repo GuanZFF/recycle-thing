@@ -48,15 +48,15 @@ elif [[ $1 == 'web' ]]; then
 
     docker exec recycle_web launch-docker.sh web
 
-elif [[ $1 == 'sso' ]]; then
+elif [[ $1 == 'oss' ]]; then
 
-    docker container stop recycle_sso
+    docker container stop recycle_oss
 
-    docker container rm recycle_sso
+    docker container rm recycle_oss
 
-    docker run -d -p 8084:8084 --name recycle_sso -it --network mynetwork --ip 172.18.0.5 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
+    docker run -d -p 8084:8084 --name recycle_oss -it --network mynetwork --ip 172.18.0.5 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
 
-    docker exec recycle_sso launch-docker.sh sso
+    docker exec recycle_oss launch-docker.sh oss
 
 elif [[ $1 == 'zuul' ]]; then
 

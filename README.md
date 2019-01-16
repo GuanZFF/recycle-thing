@@ -22,5 +22,5 @@
 #### 部署命令
 
 - 运行时需要使用travis进行构建
-- 部署命令：deploy server/service/web/sso/delete_image/pull_image RT1.0.0
+- 部署命令：deploy server/service/web/oss/delete_image/pull_image RT1.0.0
 - *在发布时需要不要忘记修改版本号*
