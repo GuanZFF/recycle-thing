@@ -76,7 +76,7 @@ elif [[ $1 == 'user' ]]; then
 
     docker run -d -p 8086:8086 --name recycle_user -it --network mynetwork --ip 172.18.0.7 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
 
-    docker exec recycle_oss launch-docker.sh oss
+    docker exec recycle_user launch-docker.sh user
 
 else
     echo '启动容器时参数错误'

@@ -9,6 +9,7 @@ ADD recycle-thing-service/target/recycle-thing-service-1.0-SNAPSHOT.jar $path
 ADD recycle-thing-web/target/recycle-thing-web-1.0-SNAPSHOT.jar $path
 ADD recycle-thing-oss/target/recycle-thing-oss-1.0-SNAPSHOT.jar $path
 ADD recycle-thing-zuul/target/recycle-thing-zuul-1.0-SNAPSHOT.jar $path
+ADD recycle-thing-user/target/recycle-thing-user-1.0-SNAPSHOT.jar $path
 
 WORKDIR $path
 
