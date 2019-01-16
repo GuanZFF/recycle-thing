@@ -22,6 +22,11 @@ public class NumberUtil {
     private static String ORDER_HEADER = "RCO";
 
     /**
+     * 生成用户编号头
+     */
+    private static String USER_HEADER = "RCU";
+
+    /**
      * 生成图片头信息
      */
     private static String IMAGE_HEADER = "RCI";
@@ -31,6 +36,8 @@ public class NumberUtil {
     private static String COLLECTOR_BUSINESS_NO = "00001001";
 
     private static String ORDER_BUSINESS_NO = "00001001";
+
+    private static String USER_BUSINESS_NO = "00001001";
 
     private static String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -51,6 +58,11 @@ public class NumberUtil {
         char first = CHARS.charAt((int) (Math.random() * 26));
         char second = CHARS.charAt((int) (Math.random() * 26));
         return ORDER_HEADER + ORDER_BUSINESS_NO + no + first + second;
+    }
+    public static String generateUserNo(Integer no) {
+        char first = CHARS.charAt((int) (Math.random() * 26));
+        char second = CHARS.charAt((int) (Math.random() * 26));
+        return USER_HEADER + USER_BUSINESS_NO + no + first + second;
     }
 
     public static String generateImageName() {

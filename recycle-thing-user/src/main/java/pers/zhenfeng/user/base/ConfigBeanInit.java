@@ -1,4 +1,4 @@
-package pers.zhenfeng.service.base;
+package pers.zhenfeng.user.base;
 
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
 import org.springframework.stereotype.Component;
-import pers.zhenfeng.core.util.FileUtil;
 import pers.zhenfeng.core.constant.DataSourceConstant;
+import pers.zhenfeng.core.util.FileUtil;
 
 import java.util.Map;
 import java.util.Properties;
@@ -44,8 +44,8 @@ public class ConfigBeanInit implements BeanFactoryPostProcessor {
     private void initDataSource(ConfigurableListableBeanFactory beanFactory, Properties properties) {
         DataSourceProperties dataSourceProperties = beanFactory.getBean(DataSourceProperties.class);
 
-        dataSourceProperties.setDriverClassName(properties.getProperty(DataSourceConstant.DRIVER_KEY));
         dataSourceProperties.setUrl(properties.getProperty(DataSourceConstant.URL_KEY));
+        dataSourceProperties.setDriverClassName(properties.getProperty(DataSourceConstant.DRIVER_KEY));
         dataSourceProperties.setUsername(properties.getProperty(DataSourceConstant.USERNAME_KEY));
         dataSourceProperties.setPassword(properties.getProperty(DataSourceConstant.PASSWORD_KEY));
     }

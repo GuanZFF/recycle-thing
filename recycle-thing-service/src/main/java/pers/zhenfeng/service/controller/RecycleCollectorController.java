@@ -16,7 +16,7 @@ import pers.zhenfeng.core.constant.ResultMsg;
 import pers.zhenfeng.core.util.BaseResultUtil;
 import pers.zhenfeng.core.util.NumberUtil;
 import pers.zhenfeng.core.util.RedisUtil;
-import pers.zhenfeng.service.constant.NumberManage;
+import pers.zhenfeng.core.constant.NumberManage;
 import pers.zhenfeng.service.mapper.RecycleCollectorMapper;
 import pers.zhenfeng.service.po.RecycleCollectorPO;
 import pers.zhenfeng.service.service.CommonService;

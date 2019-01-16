@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.zhenfeng.user.mapper.RecycleUserMapper">
+
+    <insert id="insert" parameterType="pers.zhenfeng.user.po.RecycleUserPO" useGeneratedKeys="true" keyProperty="id">
+        insert into recycle_user (user_no, open_id, phone, longitude, latitude, is_delete, create_time, update_time)
+        values (#{userNo}, #{openId}, #{phone}, #{longitude}, #{latitude},0, now(), now());
+    </insert>
+
+    <select id="getUserByNo" resultType="pers.zhenfeng.user.po.RecycleUserPO">
+        select * from recycle_user where is_delete = 0 and user_no = #{userNo}
+    </select>
+
+</mapper>

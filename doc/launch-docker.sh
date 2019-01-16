@@ -22,6 +22,10 @@ elif [[ $1 == 'zuul' ]]; then
 
     nohup java -jar /pro/recycle-thing-zuul-1.0-SNAPSHOT.jar > zuul.file 2>&1 &
 
+elif [[ $1 == 'user' ]]; then
+
+    nohup java -jar /pro/recycle-thing-user-1.0-SNAPSHOT.jar > user.file 2>&1 &
+
 else
     echo '参数无效'
 fi

@@ -68,6 +68,16 @@ elif [[ $1 == 'zuul' ]]; then
 
     docker exec recycle_zuul launch-docker.sh zuul
 
+elif [[ $1 == 'user' ]]; then
+
+    docker container stop recycle_user
+
+    docker container rm recycle_user
+
+    docker run -d -p 8086:8086 --name recycle_user -it --network mynetwork --ip 172.18.0.7 -v /data:/data gzfeng/recycle-thing:$2 /bin/bash
+
+    docker exec recycle_oss launch-docker.sh oss
+
 else
     echo '启动容器时参数错误'
 fi

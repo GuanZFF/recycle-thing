@@ -1,4 +1,4 @@
-package pers.zhenfeng.service.constant;
+package pers.zhenfeng.core.constant;
 
 public interface DataSourceConstant {
 
