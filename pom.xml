@@ -30,6 +30,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--注意和springboot的依赖对应关系-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
