@@ -45,7 +45,7 @@ public class RecycleReverseOrderController {
      * @return 插入结果
      */
     @RequestMapping("insert")
-    public BaseResult<Integer> insert(@RequestBody RecycleReverseOrderBO recycleReverseOrderBO) {
+    public BaseResult<RecycleReverseOrderBO> insert(@RequestBody RecycleReverseOrderBO recycleReverseOrderBO) {
         RecycleReverseOrderPO reverseOrderPO = new RecycleReverseOrderPO();
         BeanUtils.copyProperties(recycleReverseOrderBO, reverseOrderPO);
 
@@ -54,9 +54,13 @@ public class RecycleReverseOrderController {
 
         reverseOrderPO.setOrderNo(orderNo);
 
-        Integer insertResult = recycleReverseOrderMapper.insert(reverseOrderPO);
+        recycleReverseOrderMapper.insert(reverseOrderPO);
 
-        return BaseResultUtil.success(insertResult);
+        // 设置返回信息
+        recycleReverseOrderBO.setId(reverseOrderPO.getId());
+        recycleReverseOrderBO.setOrderNo(reverseOrderPO.getOrderNo());
+
+        return BaseResultUtil.success(recycleReverseOrderBO);
     }
 
     /**

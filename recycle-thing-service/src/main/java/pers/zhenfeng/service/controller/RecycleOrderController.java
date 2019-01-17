@@ -42,7 +42,7 @@ public class RecycleOrderController {
      * @return 插入结果
      */
     @RequestMapping("insert")
-    public BaseResult<Integer> insert(@RequestBody RecycleOrderBO recycleOrderBO) {
+    public BaseResult<RecycleOrderBO> insert(@RequestBody RecycleOrderBO recycleOrderBO) {
         RecycleOrderPO recycleOrderPO = new RecycleOrderPO();
         BeanUtils.copyProperties(recycleOrderBO, recycleOrderPO);
 
@@ -52,9 +52,13 @@ public class RecycleOrderController {
         recycleOrderPO.setOrderNo(orderNo);
 
         // 插入结果
-        Integer id = recycleOrderMapper.insert(recycleOrderPO);
+        recycleOrderMapper.insert(recycleOrderPO);
 
-        return BaseResultUtil.success(id);
+        // 设置返回值
+        recycleOrderBO.setOrderNo(orderNo);
+        recycleOrderBO.setId(recycleOrderPO.getId());
+
+        return BaseResultUtil.success(recycleOrderBO);
     }
 
     /**

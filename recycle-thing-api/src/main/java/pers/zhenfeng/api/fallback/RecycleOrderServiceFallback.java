@@ -19,7 +19,7 @@ import java.util.List;
 public class RecycleOrderServiceFallback implements RecycleOrderService {
 
     @Override
-    public BaseResult<Integer> insert(RecycleOrderBO recycleOrderBO) {
+    public BaseResult<RecycleOrderBO> insert(RecycleOrderBO recycleOrderBO) {
         return BaseResultUtil.fallback();
     }
 

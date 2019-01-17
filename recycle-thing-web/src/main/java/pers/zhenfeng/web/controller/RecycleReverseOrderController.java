@@ -40,7 +40,7 @@ public class RecycleReverseOrderController {
      * @return 插入结果
      */
     @RequestMapping("insert")
-    public BaseResult<Integer> insert(@RequestBody RecycleReverseOrderVO recycleReverseOrderVO) {
+    public BaseResult<RecycleReverseOrderVO> insert(@RequestBody RecycleReverseOrderVO recycleReverseOrderVO) {
         RecycleReverseOrderBO reverseOrderBO = new RecycleReverseOrderBO();
 
         // 设置默认时间
@@ -57,7 +57,15 @@ public class RecycleReverseOrderController {
         // copy信息
         BeanUtils.copyProperties(recycleReverseOrderVO, reverseOrderBO);
 
-        return recycleReverseOrderService.insert(reverseOrderBO);
+        BaseResult<RecycleReverseOrderBO> insertResult = recycleReverseOrderService.insert(reverseOrderBO);
+        if (BaseResultUtil.isFail(insertResult)) {
+            return BaseResultUtil.fail(insertResult.getMsg());
+        }
+        RecycleReverseOrderBO insertOrderBO = insertResult.getData();
+        recycleReverseOrderVO.setId(insertOrderBO.getId());
+        recycleReverseOrderVO.setOrderNo(insertOrderBO.getOrderNo());
+
+        return BaseResultUtil.success(recycleReverseOrderVO);
     }
 
     /**

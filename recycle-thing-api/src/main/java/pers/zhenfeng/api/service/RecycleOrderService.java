@@ -23,7 +23,7 @@ import java.util.List;
 public interface RecycleOrderService {
 
     @RequestMapping("/order/insert")
-    BaseResult<Integer> insert(@RequestBody RecycleOrderBO recycleOrderBO);
+    BaseResult<RecycleOrderBO> insert(@RequestBody RecycleOrderBO recycleOrderBO);
 
     @RequestMapping("/order/getRecycleOrderList")
     BaseResult<List<RecycleOrderBO>> getRecycleOrderList(@RequestParam("uid") String uid);

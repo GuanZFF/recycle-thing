@@ -43,7 +43,7 @@ public class RecycleOrderController {
      * @return 插入结果
      */
     @RequestMapping("insert")
-    public BaseResult<Integer> insert(@RequestBody RecycleOrderVO recycleOrderVO) {
+    public BaseResult<RecycleOrderVO> insert(@RequestBody RecycleOrderVO recycleOrderVO) {
         RecycleOrderBO recycleOrderBO = new RecycleOrderBO();
 
         BeanUtils.copyProperties(recycleOrderVO, recycleOrderBO);
@@ -58,7 +58,15 @@ public class RecycleOrderController {
             recycleOrderBO.setEndTime(DateUtil.getStringToDate(recycleOrderVO.getEndTime()));
         }
 
-        return recycleOrderService.insert(recycleOrderBO);
+        BaseResult<RecycleOrderBO> insertResult = recycleOrderService.insert(recycleOrderBO);
+        if (BaseResultUtil.isFail(insertResult)) {
+            return BaseResultUtil.fail(insertResult.getMsg());
+        }
+        RecycleOrderBO insertOrderBO = insertResult.getData();
+        recycleOrderVO.setId(insertOrderBO.getId());
+        recycleOrderVO.setOrderNo(insertOrderBO.getOrderNo());
+
+        return BaseResultUtil.success(recycleOrderVO);
     }
 
     /**

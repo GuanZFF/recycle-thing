@@ -22,7 +22,7 @@ import java.util.List;
 public interface RecycleReverseOrderService {
 
     @RequestMapping("/reverse/insert")
-    BaseResult<Integer> insert(@RequestBody RecycleReverseOrderBO recycleReverseOrderBO);
+    BaseResult<RecycleReverseOrderBO> insert(@RequestBody RecycleReverseOrderBO recycleReverseOrderBO);
 
     @RequestMapping("/reverse/getReverseOrders")
     BaseResult<List<RecycleReverseOrderBO>> getReverseOrders(String uid);
